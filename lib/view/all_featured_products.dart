@@ -1,5 +1,7 @@
 
 import 'package:cashback/controller/AppConstants.dart';
+import 'package:cashback/controller/all_feature_shops_cubit.dart';
+import 'package:cashback/controller/all_featured_controller.dart';
 import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
@@ -7,26 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-class AllProducts extends StatefulWidget {
-  const AllProducts({Key? key}) : super(key: key);
+class AllFeaturedProducts extends StatefulWidget {
+  const AllFeaturedProducts({Key? key}) : super(key: key);
 
   @override
-  State<AllProducts> createState() => _AllProductsState();
+  State<AllFeaturedProducts> createState() => _AllFeaturedProductsState();
 }
 
-class _AllProductsState extends State<AllProducts> {
+class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
   @override
   void initState(){
-    context.read<AllShopsCubit>().allShops();
+    context.read<AllFeatureShopsCubit>().allFeatureShops();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllShopsCubit, AllShopsState>(
+    return BlocBuilder<AllFeatureShopsCubit, AllFeatureShopsState>(
   builder: (context, state) {
     return state is AllShopsLoading?Center(child: const CircularProgressIndicator()):ListView.builder(
-        itemCount:AllProductsController.data.data.length,
+        itemCount:AllFeatureController.data.data.length,
         itemBuilder: (context, index){
       return Container(
         padding: EdgeInsets.all(10.sp),
@@ -46,7 +48,7 @@ class _AllProductsState extends State<AllProducts> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   image:  DecorationImage(
-                    image: AssetImage( AllProductsController.data.data[index].storeImgUrl.toString(),),
+                    image: AssetImage( AllFeatureController.data.data[index].storeImgUrl.toString(),),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -65,7 +67,7 @@ class _AllProductsState extends State<AllProducts> {
                            child: Align(
                              alignment: Alignment.topLeft,
                              child: Text(
-                               AllProductsController.data.data[index].storeName,
+                               AllFeatureController.data.data[index].storeName,
                                style: GoogleFonts.roboto(
                                  fontSize: 16.0.sp,
                                  color: const Color(0xFF363636),
@@ -78,7 +80,7 @@ class _AllProductsState extends State<AllProducts> {
                            child: Align(
                              alignment: Alignment.topCenter,
                              child: Text(
-          AllProductsController.data.data[index].storeCashback.toString(),
+          AllFeatureController.data.data[index].storeCashback.toString(),
                                style: GoogleFonts.roboto(
                                  fontSize: 20.0.sp,
                                  color: const Color(0xFFFC4F08),
@@ -96,7 +98,7 @@ class _AllProductsState extends State<AllProducts> {
                         children: [
                           Expanded(
                             child:  Text(
-          AllProductsController.data.data[index].headTitle.substring(0,  10),
+          AllFeatureController.data.data[index].headTitle.substring(0,  10),
                               style: GoogleFonts.roboto(
                                 fontSize: 14.0.sp,
                                 color: const Color(0xFF363636),
@@ -143,7 +145,7 @@ class _AllProductsState extends State<AllProducts> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AllProductsController.data.data[index].couponsCount.toString(),
+                                            AllFeatureController.data.data[index].couponsCount.toString(),
                                             style: GoogleFonts.roboto(
                                               fontSize: 16.0.sp,
                                               color: const Color(0xFF363636),
@@ -192,7 +194,7 @@ class _AllProductsState extends State<AllProducts> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-          AllProductsController.data.data[index].productsCount.toString(),
+          AllFeatureController.data.data[index].productsCount.toString(),
                                             style: GoogleFonts.roboto(
                                               fontSize: 16.0.sp,
                                               color: const Color(0xFF363636),

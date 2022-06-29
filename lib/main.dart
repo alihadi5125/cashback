@@ -1,3 +1,5 @@
+import 'package:cashback/controller/all_feature_shops_cubit.dart';
+import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/controller/signup_cubit.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'controller/bottom_navigation_page_index_cubit.dart';
 import 'controller/product_types_page_index_cubit.dart';
 import 'view/splash_screen.dart';
-void main() {
-  SharePrefs.init();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharePrefs.init();
   runApp(const MyApp());
 }
 
@@ -31,6 +34,12 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<SignupCubit>(
               create: (BuildContext context) => SignupCubit(),
+            ),
+            BlocProvider<AllShopsCubit>(
+              create: (BuildContext context) => AllShopsCubit(),
+            ),
+            BlocProvider<AllFeatureShopsCubit>(
+              create: (BuildContext context) => AllFeatureShopsCubit(),
             ),
           ],
 

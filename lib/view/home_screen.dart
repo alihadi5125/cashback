@@ -2,6 +2,7 @@ import 'package:cashback/controller/AppConstants.dart';
 import 'package:cashback/controller/cashback_icons.dart';
 import 'package:cashback/controller/product_page_controller.dart';
 import 'package:cashback/controller/product_types_page_index_cubit.dart';
+import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -327,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               children: [
                 AllProducts(),
-                AllProducts(),
+                AllFeaturedProducts(),
                 AllProducts(),
               ],
             ),

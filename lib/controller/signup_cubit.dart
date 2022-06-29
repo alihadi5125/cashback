@@ -25,20 +25,21 @@ class SignupCubit extends Cubit<SignupState> {
 
     if (response.statusCode == 200) {
         String str=await response.stream.bytesToString();
-        print(str);
-        SignUpController.data=Signup.fromJson(str);
-      try{
-        print("entering");
 
-        SharePrefs.prefs!.setString("token", SignUpController.data.accessToken);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationScreen()));
         emit(SignupSucess());
+      try{
+        SignUpController.data=Signup.fromJson(str);
 
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationScreen()));
       }
       catch(e){
         Snackbar.showSnack(context: context, message: "User Already Exist");
-        emit(SignupUserExist());
       }
+
+
+
+
+
     }
     else {
     print(response.reasonPhrase);
