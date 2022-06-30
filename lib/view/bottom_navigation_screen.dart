@@ -144,14 +144,17 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                         Expanded(
                           child: Align(
                             alignment: Alignment.topCenter,
-                            child: Text(
-                              'Refer',
-                              style: GoogleFonts.roboto(
-                                fontSize: 14.0.sp,
-                                color: state==2?const Color(0xffFC4F08):const Color(0xffA7A7A7),
-                                fontWeight: FontWeight.w500,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                'Refer a Friend',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 14.0.sp,
+                                  color: state==2?const Color(0xffFC4F08):const Color(0xffA7A7A7),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                         )

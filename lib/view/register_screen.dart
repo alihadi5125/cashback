@@ -5,6 +5,7 @@ import 'package:cashback/view/custom_widgets/text_field.dart';
 import 'package:cashback/view/login_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -251,19 +252,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           builder: (context, state) {
                             return InkWell(
                                 onTap: () {
-
                                   if(name.text.isEmpty || email.text.isEmpty || password.text.isEmpty
                                   || confirmPassword.text.isEmpty
                                   ){
                                     Snackbar.showSnack(context: context, message: "username, email and password cannot be empty");
                                   }
                                   else{
+
                                     if(password.text==confirmPassword.text){
-                                      context.read<SignupCubit>().signUp(
-                                          name.text, email.text, password.text, context);
+                                      if(EmailValidator.validate(email.text)){
+                                        context.read<SignupCubit>().signUp(
+                                            name.text, email.text, password.text, context);
+                                      }
+                                      else{
+                                        Snackbar.showSnack(context: context, message: "Please Enter a Valid Email");
+                                      }
+
                                     }
                                     else{
-                                      Snackbar.showSnack(context: context, message: "password should match");
+                                      Snackbar.showSnack(context: context, message: "Password and Confirm Password doesn't match");
                                     }
                                   }
 

@@ -1,4 +1,5 @@
 import 'package:cashback/controller/AppConstants.dart';
+import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/cashback_icons.dart';
 import 'package:cashback/controller/categories_controller.dart';
 import 'package:cashback/controller/categories_cubit.dart';
@@ -48,79 +49,14 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
             SizedBox(
               height: 30.sp,
             ),
-            Container(
-              padding: AppConstants.screenPadding,
-              height: 60.sp,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Image.asset("images/logo_orange.png"),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10.sp),
-                      width: 61.0,
-                      height: 30.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.0),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Icon(
-                              Cashback.flag,
-                              color: AppConstants.appDarkColor,
-                              size: 15.sp,
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: Icon(
-                                Icons.arrow_drop_down_sharp,
-                                color: AppConstants.appBlackMedium,
-                                size: 18.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Spacer(
-                    flex: 3,
-                  ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        width: 40.0.sp,
-                        height: 40.0.sp,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                        ),
-                        child: Icon(
-                          Icons.notifications_none,
-                          color: AppConstants.appDarkColor,
-                          size: 25.sp,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+
             Container(
               padding: AppConstants.screenPadding,
               height: 50.sp,
               child: Row(
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 4,
                     child: TextField(
                       decoration: InputDecoration(
                           prefixIcon: const Icon(
@@ -141,27 +77,20 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                     ),
                   ),
                   Expanded(
-                      child: Column(
-                        children: [
-                          const Expanded(
-                            child: Icon(
-                              Cashback.category,
-                              color: Colors.black,
-                            ),
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Cancel',
+                          style: GoogleFonts.roboto(
+                            fontSize: 14.0.sp,
+                            color: const Color(0xFF363636),
+                            fontWeight: FontWeight.w900,
                           ),
-                          Expanded(
-                            child: Text(
-                              'Categories',
-                              style: GoogleFonts.roboto(
-                                fontSize: 14.0.sp,
-                                color: const Color(0xFF363636),
-                                fontWeight: FontWeight.w900,
-                              ),
-                              textAlign: TextAlign.right,
-                            ),
-                          )
-                        ],
-                      )),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),),
                 ],
               ),
             ),
@@ -169,31 +98,30 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
               height: 20.sp,
             ),
             SizedBox(
-              height: 95.sp,
+              height: 80.sp,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 4,
+                  itemCount: AllProductsController.data.data.length,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(
-                          left: index == 0 ? 20.sp : 0, right: 10.sp),
+                          left: index == 0 ? 20.sp : 0, right: 40.sp),
                       height: 95,
                       child: Column(
                         children: [
                           Expanded(
                             flex: 4,
                             child: Container(
-                              width: 97.33,
+                              width: 70.sp,
                               height: 70.0.sp,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(11.0),
+                                borderRadius: BorderRadius.circular(11.0.sp),
                                 color: Colors.white,
                               ),
-                              child: Center(
-                                child: Image.asset(
-                                  assetsArray[index],
-                                  height: 35.sp,
-                                  width: 70.sp,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(11.0.sp),
+                                child: Image.network(AllProductsController.data.data[index].storeImgUrl,
+                                fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -202,7 +130,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: Text(
-                                categories[index],
+                                AllProductsController.data.data[index].headTitle.substring(0, 10),
                                 style: GoogleFonts.roboto(
                                   fontSize: 14.0.sp,
                                   color: const Color(0xFF363636),
@@ -216,6 +144,25 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                       ),
                     );
                   }),
+            ),
+            SizedBox(
+              height: 20.sp,
+            ),
+
+            Padding(
+              padding: AppConstants.screenPadding,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Featured Categories',
+                  style: GoogleFonts.roboto(
+                    fontSize: 14.0.sp,
+                    color: const Color(0xFF363636),
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+              ),
             ),
             SizedBox(
               height: 20.sp,

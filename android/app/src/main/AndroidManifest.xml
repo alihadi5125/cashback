@@ -2,7 +2,7 @@
     package="com.example.cashback">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="cashback"
+        android:label="Apopou"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
        android:usesCleartextTraffic="true"
