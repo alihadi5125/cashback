@@ -17,6 +17,7 @@ class AllProducts extends StatefulWidget {
 class _AllProductsState extends State<AllProducts> {
   @override
   void initState(){
+    print("feature products");
     context.read<AllShopsCubit>().allShops();
     super.initState();
   }
@@ -45,11 +46,9 @@ class _AllProductsState extends State<AllProducts> {
                 height: 80.0.sp,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
-                  image:  DecorationImage(
-                    image: AssetImage( AllProductsController.data.data[index].storeImgUrl.toString(),),
-                    fit: BoxFit.cover,
-                  ),
+
                 ),
+                child: Image.network(AllProductsController.data.data[index].storeImgUrl.toString()),
               ),
             ),
             Expanded(

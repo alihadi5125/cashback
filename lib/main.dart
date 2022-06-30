@@ -1,5 +1,7 @@
+import 'package:cashback/controller/LoginCubit/login_cubit.dart';
 import 'package:cashback/controller/all_feature_shops_cubit.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
+import 'package:cashback/controller/categories_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/controller/signup_cubit.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +42,12 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<AllFeatureShopsCubit>(
               create: (BuildContext context) => AllFeatureShopsCubit(),
+            ),
+            BlocProvider<LoginCubit>(
+              create: (BuildContext context) => LoginCubit(),
+            ),
+            BlocProvider<CategoriesCubit>(
+              create: (BuildContext context) => CategoriesCubit(),
             ),
           ],
 

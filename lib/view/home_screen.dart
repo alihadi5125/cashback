@@ -4,6 +4,7 @@ import 'package:cashback/controller/product_page_controller.dart';
 import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
+import 'package:cashback/view/search_click_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,23 +113,29 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   flex: 2,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0.sp),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(30.0.sp),
-                        ),
-                        filled: true,
-                        hintStyle: TextStyle(color: Colors.grey[800]),
-                        hintText: "Type in your text",
-                        fillColor: Colors.white70),
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchClickScreen()));
+                    },
+                    child: TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0.sp),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(30.0.sp),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Type in your text",
+                          fillColor: Colors.white70),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -237,8 +244,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
                             ProductsPageController.page.jumpTo(0);
+                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
+
                           },
                           child: Center(
                             child: Text(
@@ -264,8 +272,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 1);
                             ProductsPageController.page.jumpTo(1);
+                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 1);
+
                           },
                           child: Center(
                             child: Text(
@@ -291,8 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 2);
                             ProductsPageController.page.jumpTo(2);
+                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 2);
                           },
                           child: Center(
                             child: Text(
@@ -326,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPageChanged: (x){
                 context.read<ProductTypesPageIndexCubit>().setTabIndex(index: x);
               },
-              children: [
+              children: const [
                 AllProducts(),
                 AllFeaturedProducts(),
                 AllProducts(),

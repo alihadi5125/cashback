@@ -23,7 +23,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         height: 1.sh,
         child: PageView(
           children: [
-            HomeScreen()
+            HomeScreen(),
+
           ],
         ),
       ),
@@ -220,7 +221,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           child: Align(
                             alignment: Alignment.topCenter,
                             child: Text(
-                              'My Account',
+                              'Account',
                               style: GoogleFonts.roboto(
                                 fontSize: 14.0.sp,
                                 color: state==4?const Color(0xffFC4F08):const Color(0xffA7A7A7),

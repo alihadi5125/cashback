@@ -1,5 +1,7 @@
 import 'package:cashback/view/custom_widgets/custom_button.dart';
+import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/register_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -111,11 +113,18 @@ class _SplashSecondState extends State<SplashSecond> {
                               height: 1.06,
                             ),
                             children:  <TextSpan>[
-                              TextSpan(text: ' Sign In', style:  GoogleFonts.roboto(
+                              TextSpan(text: ' Sign In',
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                                  },
+                                style:  GoogleFonts.roboto(
                                 fontSize: 16.0.sp,
                                 color: Colors.black,
                                 letterSpacing: 0.192,
                                 fontWeight: FontWeight.w900,
+
                               ),),
                             ],
                           ),

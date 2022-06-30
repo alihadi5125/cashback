@@ -19,6 +19,7 @@ class AllFeaturedProducts extends StatefulWidget {
 class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
   @override
   void initState(){
+    print("feature products");
     context.read<AllFeatureShopsCubit>().allFeatureShops();
     super.initState();
   }
@@ -27,7 +28,9 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
   Widget build(BuildContext context) {
     return BlocBuilder<AllFeatureShopsCubit, AllFeatureShopsState>(
   builder: (context, state) {
-    return state is AllShopsLoading?Center(child: const CircularProgressIndicator()):ListView.builder(
+    return state is AllFeatureShopsLoading?
+    Center(child: const CircularProgressIndicator())
+        :ListView.builder(
         itemCount:AllFeatureController.data.data.length,
         itemBuilder: (context, index){
       return Container(
@@ -47,11 +50,8 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
                 height: 80.0.sp,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
-                  image:  DecorationImage(
-                    image: AssetImage( AllFeatureController.data.data[index].storeImgUrl.toString(),),
-                    fit: BoxFit.cover,
-                  ),
                 ),
+                child: Image.network(AllFeatureController.data.data[index].storeImgUrl.toString()),
               ),
             ),
             Expanded(

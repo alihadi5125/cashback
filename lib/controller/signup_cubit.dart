@@ -6,46 +6,48 @@ import 'package:cashback/view/custom_widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+
 part 'signup_state.dart';
-
-
 
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
 
-  Future<void> signUp(String username, String email, String password, BuildContext context) async {
-    var request = http.MultipartRequest('POST', Uri.parse('https://mobileapi.apopou.gr/api/register'));
-    request.fields.addAll({
-      'fname': username,
-      'username': email,
-      'password': password
-    });
+  Future<void> signUp(String username, String email, String password,
+      BuildContext context) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://mobileapi.apopou.gr/api/register'));
+    request.fields
+        .addAll({'fname': username, 'username': email, 'password': password});
     emit(SignupLoading());
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-        String str=await response.stream.bytesToString();
+      String str = await response.stream.bytesToString();
 
-        emit(SignupSucess());
-      try{
-        SignUpController.data=Signup.fromJson(str);
+      emit(SignupSucess());
+      try {
+        SignUpController.data = Signup.fromJson(str);
 
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationScreen()));
-      }
-      catch(e){
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
+      } catch (e) {
         Snackbar.showSnack(context: context, message: "User Already Exist");
       }
-
-
-
-
-
-    }
-    else {
-    print(response.reasonPhrase);
+    } else {
+      print(response.reasonPhrase);
     }
   }
 }
-class SignUpController{
-  static Signup data=Signup(tokenType: '', accessToken: '', data: Data(userId: 1, created: DateTime.now(), fname: '', ip: '', sha1: 343, username: ''));
+
+class SignUpController {
+  static Signup data = Signup(
+      tokenType: '',
+      accessToken: '',
+      data: Data(
+          userId: 1,
+          created: DateTime.now(),
+          fname: '',
+          ip: '',
+          sha1: 343,
+          username: ''));
 }
