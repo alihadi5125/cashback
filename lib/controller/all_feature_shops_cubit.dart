@@ -8,7 +8,8 @@ part 'all_feature_shops_state.dart';
 class AllFeatureShopsCubit extends Cubit<AllFeatureShopsState> {
   AllFeatureShopsCubit() : super(AllFeatureShopsInitial());
   Future<void> allFeatureShops() async{
-    var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/retailers'));
+    var request = http.Request('GET',
+        Uri.parse('https://mobileapi.apopou.gr/api/retailers/featured'));
     emit(AllFeatureShopsLoading());
     http.StreamedResponse response = await request.send();
 

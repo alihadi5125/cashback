@@ -9,7 +9,8 @@ part 'all_shops_state.dart';
 class AllShopsCubit extends Cubit<AllShopsState> {
   AllShopsCubit() : super(AllShopsInitial());
   Future<void> allShops() async{
-    var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/retailers'));
+    var request = http.Request('GET',
+        Uri.parse('https://mobileapi.apopou.gr/api/retailers'));
     emit(AllShopsLoading());
     http.StreamedResponse response = await request.send();
 
