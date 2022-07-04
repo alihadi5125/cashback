@@ -1,14 +1,20 @@
 import 'package:cashback/controller/AppConstants.dart';
+
 import 'package:cashback/controller/cashback_icons.dart';
+import 'package:cashback/controller/parent_categories_controller.dart';
 import 'package:cashback/controller/product_page_controller.dart';
 import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
+import 'package:cashback/view/favourite_products.dart';
 import 'package:cashback/view/search_click_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../controller/parent_categories_cubit.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -17,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController controller=PageController(initialPage: 0);
   List<String> assetsArray = [
     "images/marketplace.png",
     "images/electronics.png",
@@ -29,6 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
     "Home Appliances",
     "Electronics",
   ];
+  @override
+  void initState(){
+    super.initState();
+    context.read<ParentCategoriesCubit>().parentCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,9 +180,56 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(
             height: 95.sp,
-            child: ListView.builder(
+            child: BlocBuilder<ParentCategoriesCubit, ParentCategoriesState>(
+  builder: (context, state) {
+    return state is ParentCategoriesLoading  ? ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 4,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: EdgeInsets.only(
+                left: index == 0 ? 20.sp : 0, right: 10.sp),
+            height: 95,
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    width: 97.33,
+                    height: 70.0.sp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(11.0),
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                      child: CircularProgressIndicator()
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Text(
+                        categories[index],
+                        style: GoogleFonts.roboto(
+                          fontSize: 14.0.sp,
+                          color: const Color(0xFF363636),
+                          fontWeight: FontWeight.w900,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        }):ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 4,
+                itemCount:ParentCategoriesController.data.data.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.only(
@@ -189,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Center(
                               child: Image.asset(
-                                assetsArray[index],
+                                index>=assetsArray.length?assetsArray[0]:assetsArray[index],
                                 height: 35.sp,
                                 width: 70.sp,
                               ),
@@ -200,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Text(
-                              categories[index],
+                              ParentCategoriesController.data.data[index].categoryTitle,
                               style: GoogleFonts.roboto(
                                 fontSize: 14.0.sp,
                                 color: const Color(0xFF363636),
@@ -213,7 +272,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   );
-                }),
+                });
+  },
+),
           ),
           SizedBox(
             height: 20.sp,
@@ -244,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            ProductsPageController.page.jumpTo(0);
+                            controller.jumpToPage(0);
                             context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
 
                           },
@@ -272,8 +333,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            ProductsPageController.page.jumpTo(1);
+
                             context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 1);
+                            controller.jumpToPage(1);
 
                           },
                           child: Center(
@@ -300,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            ProductsPageController.page.jumpTo(2);
+                           controller.jumpToPage(2);
                             context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 2);
                           },
                           child: Center(
@@ -331,14 +393,14 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: AppConstants.screenPadding,
             height: 0.45.sh,
             child: PageView(
-              controller: ProductsPageController.page,
+              controller: controller,
               onPageChanged: (x){
                 context.read<ProductTypesPageIndexCubit>().setTabIndex(index: x);
               },
               children: const [
                 AllProducts(),
                 AllFeaturedProducts(),
-                AllProducts(),
+                FavouriteProducts()
               ],
             ),
           )

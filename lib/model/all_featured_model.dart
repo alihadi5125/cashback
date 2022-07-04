@@ -210,14 +210,14 @@ class Links {
     required this.next,
   });
 
-  String next;
+  String? next;
 
   factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
-    next: json["next"],
+    next: json["next"]??"",
   );
 
   Map<String, dynamic> toJson() => {

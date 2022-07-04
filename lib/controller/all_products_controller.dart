@@ -9,6 +9,8 @@ class AllProductsController {
               links: Links(next: ''),
               perPage: 0,
               count: 0,
-              total: 9,
-              totalPages: 34)));
+              total: 2,
+              totalPages: 2)));
+  static int page=1;
+  static List<Datum> listData=[];
 }

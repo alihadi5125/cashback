@@ -5,8 +5,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-class AllStores {
-  AllStores({
+class FavouriteModel {
+  FavouriteModel({
     required this.data,
     required this.meta,
   });
@@ -14,11 +14,11 @@ class AllStores {
   List<Datum> data;
   Meta meta;
 
-  factory AllStores.fromRawJson(String str) => AllStores.fromJson(json.decode(str));
+  factory FavouriteModel.fromRawJson(String str) => FavouriteModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory AllStores.fromJson(Map<String, dynamic> json) => AllStores(
+  factory FavouriteModel.fromJson(Map<String, dynamic> json) => FavouriteModel(
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
     meta: Meta.fromJson(json["meta"]),
   );
@@ -217,7 +217,7 @@ class Links {
   String toRawJson() => json.encode(toJson());
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
-    next: json["next"],
+    next: json["next"]??"",
   );
 
   Map<String, dynamic> toJson() => {

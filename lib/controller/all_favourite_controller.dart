@@ -1,6 +1,8 @@
-import 'package:cashback/model/all_featured_model.dart';
-class AllFeatureController {
-  static AllFeatured data = AllFeatured(
+
+import 'package:cashback/model/favourite_model.dart';
+
+class AllFavouriteController {
+  static FavouriteModel data = FavouriteModel(
       data: [],
       meta: Meta(
           pagination: Pagination(

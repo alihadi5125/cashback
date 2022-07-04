@@ -1,5 +1,7 @@
 
 import 'package:cashback/controller/AppConstants.dart';
+import 'package:cashback/controller/all_favourite_controller.dart';
+import 'package:cashback/controller/all_favourite_products_cubit.dart';
 import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
@@ -8,27 +10,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-class AllProducts extends StatefulWidget {
-  const AllProducts({Key? key}) : super(key: key);
+class FavouriteProducts extends StatefulWidget {
+  const FavouriteProducts({Key? key}) : super(key: key);
 
   @override
-  State<AllProducts> createState() => _AllProductsState();
+  State<FavouriteProducts> createState() => _FavouriteProductsState();
 }
 
-class _AllProductsState extends State<AllProducts> {
+class _FavouriteProductsState extends State<FavouriteProducts> {
   final RefreshController refreshController =
   RefreshController(initialRefresh: true);
   @override
   void initState(){
     print("all Products");
-    AllProductsController.page=1;
-    AllProductsController.listData.clear();
+    AllFavouriteController.page=1;
+    AllFavouriteController.listData.clear();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllShopsCubit, AllShopsState>(
+    return BlocBuilder<AllFavouriteProductsCubit, AllFavouriteProductsState>(
   builder: (context, state) {
     return SmartRefresher(
       controller: refreshController,
@@ -36,7 +38,7 @@ class _AllProductsState extends State<AllProducts> {
       reverse: false,
       onRefresh: () async {
         refreshController.requestRefresh();
-        final result =await context.read<AllShopsCubit>().allShops();
+        final result =await context.read<AllFavouriteProductsCubit>().allFavouriteProducts();
         if (result) {
           refreshController.refreshCompleted();
         } else {
@@ -45,7 +47,7 @@ class _AllProductsState extends State<AllProducts> {
       },
       onLoading: () async {
         refreshController.requestLoading();
-        final result =await context.read<AllShopsCubit>().allShops();
+        final result =await context.read<AllFavouriteProductsCubit>().allFavouriteProducts();
         if (result) {
           refreshController.loadComplete();
         } else {
@@ -53,7 +55,7 @@ class _AllProductsState extends State<AllProducts> {
         }
       },
       child: ListView.builder(
-          itemCount: AllProductsController.listData.length,
+          itemCount: AllFavouriteController.listData.length,
           itemBuilder: (context, index){
             return Container(
               padding: EdgeInsets.all(10.sp),
@@ -74,7 +76,7 @@ class _AllProductsState extends State<AllProducts> {
                         borderRadius: BorderRadius.circular(5.0),
 
                       ),
-                      child: Image.network(AllProductsController.listData[index].storeImgUrl.toString()),
+                      child: Image.network(AllFavouriteController.listData[index].storeImgUrl.toString()),
                     ),
                   ),
                   Expanded(
@@ -92,7 +94,7 @@ class _AllProductsState extends State<AllProducts> {
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Text(
-                                        AllProductsController.listData[index].storeName,
+                                        AllFavouriteController.listData[index].storeName,
                                         style: GoogleFonts.roboto(
                                           fontSize: 16.0.sp,
                                           color: const Color(0xFF363636),
@@ -108,7 +110,7 @@ class _AllProductsState extends State<AllProducts> {
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Text(
-                                        AllProductsController.listData[index].storeCashback.toString(),
+                                        AllFavouriteController.listData[index].storeCashback.toString(),
                                         style: GoogleFonts.roboto(
                                           fontSize: 20.0.sp,
                                           color: const Color(0xFFFC4F08),
@@ -131,7 +133,7 @@ class _AllProductsState extends State<AllProducts> {
                                       child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          AllProductsController.listData[index].headTitle.substring(0,  10),
+                                          AllFavouriteController.listData[index].headTitle.substring(0,  10),
                                           style: GoogleFonts.roboto(
                                             fontSize: 14.0.sp,
                                             color: const Color(0xFF363636),
@@ -185,7 +187,7 @@ class _AllProductsState extends State<AllProducts> {
                                                 child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
-                                                    AllProductsController.listData[index].couponsCount.toString(),
+                                                    AllFavouriteController.listData[index].couponsCount.toString(),
                                                     style: GoogleFonts.roboto(
                                                       fontSize: 16.0.sp,
                                                       color: const Color(0xFF363636),
@@ -240,7 +242,7 @@ class _AllProductsState extends State<AllProducts> {
                                                 child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
-                                                    AllProductsController.listData[index].productsCount.toString(),
+                                                    AllFavouriteController.listData[index].productsCount.toString(),
                                                     style: GoogleFonts.roboto(
                                                       fontSize: 16.0.sp,
                                                       color: const Color(0xFF363636),

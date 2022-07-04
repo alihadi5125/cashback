@@ -1,6 +1,7 @@
 import 'package:cashback/view/custom_widgets/custom_button.dart';
 import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/register_screen.dart';
+import 'package:cashback/view/splash_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +38,7 @@ class _SplashSecondState extends State<SplashSecond> {
                   ),
                   child: InkWell(
                     onTap: (){
-                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SplashScreen()));
                     },
                     child: Icon(
                       Icons.arrow_back,

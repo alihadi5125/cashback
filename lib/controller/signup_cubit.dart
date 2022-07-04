@@ -27,7 +27,7 @@ class SignupCubit extends Cubit<SignupState> {
       emit(SignupSucess());
       try {
         SignUpController.data = Signup.fromJson(str);
-
+        SharePrefs.prefs!.setString("token", SignUpController.data.accessToken);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
       } catch (e) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:cashback/controller/login_controller.dart';
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/model/login_model.dart';
 import 'package:cashback/view/bottom_navigation_screen.dart';
 import 'package:cashback/view/custom_widgets/snack_bar.dart';
@@ -41,6 +42,7 @@ class LoginCubit extends Cubit<LoginState> {
         print(str);
         try{
           LoginController.data=LoginModel.fromJson(str);
+          SharePrefs.prefs!.setString("token", LoginController.data.accessToken);
           emit(LoginSuccess());
           Navigator.push(
               context,

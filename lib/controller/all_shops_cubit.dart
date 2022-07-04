@@ -8,21 +8,39 @@ part 'all_shops_state.dart';
 
 class AllShopsCubit extends Cubit<AllShopsState> {
   AllShopsCubit() : super(AllShopsInitial());
-  Future<void> allShops() async{
-    var request = http.Request('GET',
-        Uri.parse('https://mobileapi.apopou.gr/api/retailers'));
-    emit(AllShopsLoading());
-    http.StreamedResponse response = await request.send();
+  Future<bool> allShops() async{
+    if(AllProductsController.page<=AllProductsController.data.meta.pagination.totalPages){
+      print("page now is "+AllProductsController.page.toString());
+      print("total Pages are "+AllProductsController.data.meta.pagination.totalPages.toString());
+      var request = http.Request('GET',
+          Uri.parse('https://mobileapi.apopou.gr/api/retailers?page=${AllProductsController.page}'));
 
-    if (response.statusCode == 200) {
-      String str=await response.stream.bytesToString();
-      AllProductsController.data=AllStores.fromRawJson(str);
-      emit(AllShopsLoaded());
+      emit(AllShopsLoading());
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        String str=await response.stream.bytesToString();
+        AllProductsController.data=AllStores.fromRawJson(str);
+        AllProductsController.listData.addAll(AllProductsController.data.data);
+        AllProductsController.page=AllProductsController.page+1;
+        print("length of data is ");
+        print(AllProductsController.listData.length);
+
+        emit(AllShopsLoaded());
+        return true;
+      }
+
+      else {
+        emit(AllShopsError());
+        print(response.reasonPhrase);
+        return false;
+
+      }
+
     }
-    else {
-      emit(AllShopsError());
-    print(response.reasonPhrase);
+    else{
+      return false;
+    }
     }
 
-  }
 }

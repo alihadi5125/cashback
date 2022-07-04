@@ -7,21 +7,33 @@ part 'all_feature_shops_state.dart';
 
 class AllFeatureShopsCubit extends Cubit<AllFeatureShopsState> {
   AllFeatureShopsCubit() : super(AllFeatureShopsInitial());
-  Future<void> allFeatureShops() async{
-    var request = http.Request('GET',
-        Uri.parse('https://mobileapi.apopou.gr/api/retailers/featured'));
-    emit(AllFeatureShopsLoading());
-    http.StreamedResponse response = await request.send();
+  Future<bool> allFeatureShops() async{
 
-    if (response.statusCode == 200) {
-      String str=await response.stream.bytesToString();
-      AllFeatureController.data=AllFeatured.fromRawJson(str);
-      emit(AllFeatureShopsLoaded());
+    if(AllFeatureController.page<=AllFeatureController.data.meta.pagination.totalPages){
+      var request = http.Request('GET',
+          Uri.parse('https://mobileapi.apopou.gr/api/retailers/featured'));
+      emit(AllFeatureShopsLoading());
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        String str=await response.stream.bytesToString();
+        AllFeatureController.data=AllFeatured.fromRawJson(str);
+        AllFeatureController.listData.addAll(AllFeatureController.data.data);
+        AllFeatureController.page=AllFeatureController.page+1;
+        emit(AllFeatureShopsLoaded());
+        return true;
+      }
+      else {
+        emit(AllFeatureShopsError());
+        print(response.reasonPhrase);
+        return false;
+      }
+
     }
-    else {
-      emit(AllFeatureShopsError());
-      print(response.reasonPhrase);
+    else{
+      return false;
     }
+
 
   }
 }
