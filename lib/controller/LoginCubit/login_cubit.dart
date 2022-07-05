@@ -43,12 +43,13 @@ class LoginCubit extends Cubit<LoginState> {
         try{
           LoginController.data=LoginModel.fromJson(str);
           SharePrefs.prefs!.setString("token", LoginController.data.accessToken);
+          SharePrefs.prefs!.setString("uid", LoginController.data.data.userId.toString());
           emit(LoginSuccess());
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      BottomNavigationScreen()));
+                      BottomNavigationScreen(guest: false,)));
         }
         catch(e){
          emit(LoginError());

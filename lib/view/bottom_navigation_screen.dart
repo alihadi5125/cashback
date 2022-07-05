@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_screen.dart';
 class BottomNavigationScreen extends StatefulWidget {
-  const BottomNavigationScreen({Key? key}) : super(key: key);
+ bool guest;
+ BottomNavigationScreen({required this.guest});
 
   @override
   State<BottomNavigationScreen> createState() => _BottomNavigationScreenState();
@@ -30,11 +31,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           child: PageView(
             controller: pageController,
             children: [
-              HomeScreen(),
+              HomeScreen(guest:widget.guest),
               Container(),
               Container(),
               Container(),
-              AccountScreen(),
+              AccountScreen(guest:widget.guest),
 
             ],
           ),
@@ -61,6 +62,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       onTap: (){
                         context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 0);
                         pageController.jumpToPage(0);
+
+
                       },
                       child: Column(
                         children: [
@@ -98,8 +101,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: (){
-                        pageController.jumpToPage(1);
-                        context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 1);
+                        if(!widget.guest){
+                          pageController.jumpToPage(1);
+                          context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 1);
+                        }
+
                       },
                       child: Column(
                         children: [
@@ -137,9 +143,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: (){
+                            if(!widget.guest){
 
-                        context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 2);
-                        pageController.jumpToPage(2);
+                              context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 2);
+                              pageController.jumpToPage(2);
+                            }
                       },
                       child: Column(
                         children: [
@@ -180,8 +188,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: (){
-                        context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 3);
-                        pageController.jumpToPage(3);
+                       if(!widget.guest){
+                         context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 3);
+                         pageController.jumpToPage(3);
+                       }
                       },
                       child: Column(
                         children: [

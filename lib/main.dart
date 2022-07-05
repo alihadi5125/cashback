@@ -1,4 +1,5 @@
 import 'package:cashback/controller/LoginCubit/login_cubit.dart';
+import 'package:cashback/controller/add_to_fav_cubit.dart';
 import 'package:cashback/controller/all_favourite_products_cubit.dart';
 import 'package:cashback/controller/all_feature_shops_cubit.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
@@ -65,6 +66,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<LogoutCubit>(
               create: (BuildContext context) => LogoutCubit(),
+            ),
+            BlocProvider<AddToFavCubit>(
+              create: (BuildContext context) => AddToFavCubit(),
             ),
           ],
 

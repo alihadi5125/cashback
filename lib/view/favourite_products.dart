@@ -1,5 +1,6 @@
 
 import 'package:cashback/controller/AppConstants.dart';
+import 'package:cashback/controller/add_to_fav_cubit.dart';
 import 'package:cashback/controller/all_favourite_controller.dart';
 import 'package:cashback/controller/all_favourite_products_cubit.dart';
 import 'package:cashback/controller/all_products_controller.dart';
@@ -274,7 +275,7 @@ class _FavouriteProductsState extends State<FavouriteProducts> {
                                     ],
                                   ),
                                 ),
-                                const Expanded(
+                                 Expanded(
                                   child: Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Icon(

@@ -105,11 +105,15 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 300.0.sp,
                   height: 46.0.sp,
                   child: DropdownSearch<String>(
+
                     popupProps: PopupProps.menu(
+
+                      constraints: BoxConstraints(maxHeight: 110),
                       showSelectedItems: true,
                       disabledItemFn: (String s) => s.startsWith('I'),
                     ),
-                    items: ["Cyprus","Tunisia", 'Canada'],
+                    items: ["Cyprus","Greek"],
+
                     onChanged: print,
                     dropdownDecoratorProps: DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(

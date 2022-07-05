@@ -222,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(2.0.sp),
                               color: const Color(0xFFFC4F08),
                               ),
-                              child: Center(
+                              child: const Center(
                               child: CircularProgressIndicator()
                               ),
                               )
@@ -262,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 40.sp,
+                            height: 20.sp,
                           ),
                           Center(
                             child: RichText(
@@ -293,6 +293,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   )..recognizer
                                 ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          Center(
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationScreen(
+                                  guest:true
+                                )));
+                              },
+                              child: Text(
+                                "Login as a guest",
+                                 style: GoogleFonts.roboto(
+                                fontSize: 17.0.sp,
+                                color:Colors.grey,
+                                fontWeight: FontWeight.w500,
+                                height: 1.06,
+                              ),
                               ),
                             ),
                           )

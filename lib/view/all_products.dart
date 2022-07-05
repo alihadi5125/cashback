@@ -1,5 +1,6 @@
 
 import 'package:cashback/controller/AppConstants.dart';
+import 'package:cashback/controller/add_to_fav_cubit.dart';
 import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
@@ -272,12 +273,17 @@ class _AllProductsState extends State<AllProducts> {
                                     ],
                                   ),
                                 ),
-                                const Expanded(
+                                 Expanded(
                                   child: Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: Icon(
-                                      Cashback.like,
-                                      color: Colors.black,
+                                    child: InkWell(
+                                      onTap: (){
+                                        context.read<AddToFavCubit>().addToFav(id:  AllProductsController.listData[index].identifier, context: context);
+                                      },
+                                      child: Icon(
+                                        Cashback.like,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
                                 )

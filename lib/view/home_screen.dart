@@ -7,6 +7,7 @@ import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
 import 'package:cashback/view/favourite_products.dart';
+import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/search_click_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,8 @@ import 'package:shimmer/shimmer.dart';
 
 import '../controller/parent_categories_cubit.dart';
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  bool guest;
+  HomeScreen({required this.guest});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -362,8 +364,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                           controller.jumpToPage(2);
-                            context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 2);
+                            if(!widget.guest){
+                              controller.jumpToPage(2);
+                              context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 2);
+                            }
+                            else{
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                            }
+
                           },
                           child: Center(
                             child: Text(
@@ -393,9 +401,11 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: AppConstants.screenPadding,
             height: 0.45.sh,
             child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (x){
                 context.read<ProductTypesPageIndexCubit>().setTabIndex(index: x);
+
               },
               children: const [
                 AllProducts(),

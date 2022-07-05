@@ -18,7 +18,7 @@ class _SplashSecondState extends State<SplashSecond> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffEFEEEE),
+        backgroundColor: const Color(0xffEFEEEE),
         body: SizedBox(
           width: 1.sw,
           height: 1.sh,
@@ -38,7 +38,7 @@ class _SplashSecondState extends State<SplashSecond> {
                   ),
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SplashScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const SplashScreen()));
                     },
                     child: Icon(
                       Icons.arrow_back,
@@ -97,7 +97,7 @@ class _SplashSecondState extends State<SplashSecond> {
                       ),
                       InkWell(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const RegisterScreen()));
                           },
                           child: CustomButton(title: "Register Now")),
                       SizedBox(
@@ -118,7 +118,7 @@ class _SplashSecondState extends State<SplashSecond> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                        builder: (context) => const LoginScreen()));
                                   },
                                 style:  GoogleFonts.roboto(
                                 fontSize: 16.0.sp,

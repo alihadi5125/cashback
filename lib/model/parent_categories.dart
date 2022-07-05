@@ -64,10 +64,10 @@ class Datum {
     categoryTitle: json["categoryTitle"],
     img: json["IMG"],
     ico: json["ICO"],
-    categoryDescription: json["categoryDescription"],
+    categoryDescription: json["categoryDescription"]?? "",
     uri: json["URI"],
-    headTitle: json["headTitle"],
-    metaDescription: json["metaDescription"],
+    headTitle: json["headTitle"]??"",
+    metaDescription: json["metaDescription"]??"",
     sortNo: json["sortNo"],
   );
 

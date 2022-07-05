@@ -28,8 +28,9 @@ class SignupCubit extends Cubit<SignupState> {
       try {
         SignUpController.data = Signup.fromJson(str);
         SharePrefs.prefs!.setString("token", SignUpController.data.accessToken);
+        SharePrefs.prefs!.setString("uid", SignUpController.data.data.userId.toString());
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
+            MaterialPageRoute(builder: (context) => BottomNavigationScreen(guest: false,)));
       } catch (e) {
         Snackbar.showSnack(context: context, message: "User Already Exist");
       }

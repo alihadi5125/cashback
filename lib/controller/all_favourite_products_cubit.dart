@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cashback/controller/all_favourite_controller.dart';
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/model/favourite_model.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -11,9 +12,10 @@ class AllFavouriteProductsCubit extends Cubit<AllFavouriteProductsState> {
 
     if(AllFavouriteController.page<=AllFavouriteController.data.meta.pagination.totalPages){
       var headers = {
-        'Authorization': 'Bearer 9|3XGAO3FrGL2GtTd9A7QBhBbvopp1dyzm0LFQZ3Bm'
+        'Authorization': 'Bearer ${SharePrefs.prefs!.getString("token")}'
       };
-      var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/user/4/favorites?${AllFavouriteController.page}'));
+
+      var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/user/${SharePrefs.prefs!.getString("uid")}/favorites?page=${AllFavouriteController.page.toString()}'));
 
       request.headers.addAll(headers);
       emit(AllFavouriteProductsLoading());
