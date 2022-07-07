@@ -54,7 +54,7 @@ class _AllProductsState extends State<AllProducts> {
         }
       },
       child: ListView.builder(
-          itemCount: AllProductsController.listData.length,
+          itemCount:2,
           itemBuilder: (context, index){
             return Container(
               padding: EdgeInsets.all(10.sp),
@@ -132,7 +132,7 @@ class _AllProductsState extends State<AllProducts> {
                                       child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          AllProductsController.listData[index].headTitle.substring(0,  10),
+                                          AllProductsController.listData[index].categories!.data[0].categoryTitle,
                                           style: GoogleFonts.roboto(
                                             fontSize: 14.0.sp,
                                             color: const Color(0xFF363636),

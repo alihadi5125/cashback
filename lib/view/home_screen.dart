@@ -63,41 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   flex: 2,
                   child: Image.asset("images/logo_orange.png"),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(10.sp),
-                    width: 61.0,
-                    height: 30.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13.0),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Icon(
-                            Cashback.flag,
-                            color: AppConstants.appDarkColor,
-                            size: 15.sp,
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Icon(
-                              Icons.arrow_drop_down_sharp,
-                              color: AppConstants.appBlackMedium,
-                              size: 18.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+
                 const Spacer(
-                  flex: 3,
+                  flex: 4,
                 ),
                 Expanded(
                   child: Align(

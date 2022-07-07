@@ -101,7 +101,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
               height: 80.sp,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: AllProductsController.data.data.length,
+                  itemCount: AllProductsController.data.data!.length,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(
@@ -120,7 +120,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(11.0.sp),
-                                child: Image.network(AllProductsController.data.data[index].storeImgUrl,
+                                child: Image.network(AllProductsController.data.data![index].storeImgUrl,
                                 fit: BoxFit.cover,
                                 ),
                               ),
@@ -130,7 +130,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: Text(
-                                AllProductsController.data.data[index].headTitle.substring(0, 10),
+                                AllProductsController.data.data![index].storeName.substring(0, 10),
                                 style: GoogleFonts.roboto(
                                   fontSize: 14.0.sp,
                                   color: const Color(0xFF363636),

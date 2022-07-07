@@ -1,3 +1,5 @@
+
+
 import 'package:cashback/model/all_shops_model.dart';
 
 class AllProductsController {
@@ -12,5 +14,5 @@ class AllProductsController {
               total: 2,
               totalPages: 2)));
   static int page=1;
-  static List<Datum> listData=[];
+  static List<AllStoresDatum> listData=[];
 }

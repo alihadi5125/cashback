@@ -11,15 +11,15 @@ class AllStores {
     required this.meta,
   });
 
-  List<Datum> data;
-  Meta meta;
+  final List<AllStoresDatum> data;
+  final Meta meta;
 
   factory AllStores.fromRawJson(String str) => AllStores.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory AllStores.fromJson(Map<String, dynamic> json) => AllStores(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: List<AllStoresDatum>.from(json["data"].map((x) => AllStoresDatum.fromJson(x))),
     meta: Meta.fromJson(json["meta"]),
   );
 
@@ -29,119 +29,111 @@ class AllStores {
   };
 }
 
-class Datum {
-  Datum({
+class AllStoresDatum {
+  AllStoresDatum({
     required this.identifier,
-    required this.networkId,
-    required this.networkProgramId,
     required this.storeName,
-    required this.redirectUrl,
     required this.storeImgUrl,
     required this.storeCashback,
-    required this.storeTerms,
-    required this.shortDescription,
-    required this.storeDomain,
-    required this.storeTags,
-    required this.headTitle,
-    required this.metaDescription,
-    required this.shippingInfo,
-    required this.featuredStore,
-    required this.storeOfWeek,
-    required this.noOfVisits,
-    required this.status,
-    required this.flatShippingAmount,
-    required this.aboveFlatShippingAmount,
-    required this.apopouCommissionPercent,
-    required this.expiringDate,
-    required this.createdOnDate,
     required this.couponsCount,
     required this.productsCount,
+    required this.categories,
   });
 
-  int identifier;
-  int networkId;
-  String networkProgramId;
-  String storeName;
-  String redirectUrl;
-  String storeImgUrl;
-  String storeCashback;
-  String storeTerms;
-  String shortDescription;
-  String storeDomain;
-  String storeTags;
-  String headTitle;
-  String metaDescription;
-  String shippingInfo;
-  int featuredStore;
-  int storeOfWeek;
-  int noOfVisits;
-  String status;
-  int flatShippingAmount;
-  int aboveFlatShippingAmount;
-  int apopouCommissionPercent;
-  String expiringDate;
-  DateTime createdOnDate;
-  int couponsCount;
-  int productsCount;
+  final int identifier;
+  final String storeName;
+  final String storeImgUrl;
+  final String storeCashback;
+  final int couponsCount;
+  final int productsCount;
+  final Categories? categories;
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory AllStoresDatum.fromRawJson(String str) => AllStoresDatum.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory AllStoresDatum.fromJson(Map<String, dynamic> json) => AllStoresDatum(
     identifier: json["identifier"],
-    networkId: json["networkID"],
-    networkProgramId: json["networkProgramID"],
     storeName: json["storeName"],
-    redirectUrl: json["redirectURL"],
     storeImgUrl: json["storeImgURL"],
     storeCashback: json["storeCashback"],
-    storeTerms: json["storeTerms"],
-    shortDescription: json["shortDescription"],
-    storeDomain: json["storeDomain"],
-    storeTags: json["storeTags"],
-    headTitle: json["headTitle"],
-    metaDescription: json["metaDescription"],
-    shippingInfo: json["shippingInfo"],
-    featuredStore: json["featuredStore"],
-    storeOfWeek: json["storeOfWeek"],
-    noOfVisits: json["noOfVisits"],
-    status: json["status"],
-    flatShippingAmount: json["flatShippingAmount"],
-    aboveFlatShippingAmount: json["aboveFlatShippingAmount"],
-    apopouCommissionPercent: json["apopouCommissionPercent"],
-    expiringDate: json["expiringDate"],
-    createdOnDate: DateTime.parse(json["createdOnDate"]),
     couponsCount: json["coupons_count"],
     productsCount: json["products_count"],
+    categories: json["categories"]==null?Categories(data: []):Categories.fromJson(json["categories"]),
   );
 
   Map<String, dynamic> toJson() => {
     "identifier": identifier,
-    "networkID": networkId,
-    "networkProgramID": networkProgramId,
     "storeName": storeName,
-    "redirectURL": redirectUrl,
     "storeImgURL": storeImgUrl,
     "storeCashback": storeCashback,
-    "storeTerms": storeTerms,
-    "shortDescription": shortDescription,
-    "storeDomain": storeDomain,
-    "storeTags": storeTags,
-    "headTitle": headTitle,
-    "metaDescription": metaDescription,
-    "shippingInfo": shippingInfo,
-    "featuredStore": featuredStore,
-    "storeOfWeek": storeOfWeek,
-    "noOfVisits": noOfVisits,
-    "status": status,
-    "flatShippingAmount": flatShippingAmount,
-    "aboveFlatShippingAmount": aboveFlatShippingAmount,
-    "apopouCommissionPercent": apopouCommissionPercent,
-    "expiringDate": expiringDate,
-    "createdOnDate": createdOnDate.toIso8601String(),
     "coupons_count": couponsCount,
     "products_count": productsCount,
+    "categories": categories!.toJson(),
+  };
+}
+
+class Categories {
+  Categories({
+    required this.data,
+  });
+
+  final List<CategoriesDatum> data;
+
+  factory Categories.fromRawJson(String str) => Categories.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Categories.fromJson(Map<String, dynamic> json) => Categories(
+    data: List<CategoriesDatum>.from(json["data"].map((x) => CategoriesDatum.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  };
+}
+
+class CategoriesDatum {
+  CategoriesDatum({
+    required this.identifier,
+    required this.parentId,
+    required this.categoryTitle,
+    required this.img,
+    required this.ico,
+    required this.uri,
+    required this.sortNo,
+  });
+
+  final int identifier;
+  final String parentId;
+  final String categoryTitle;
+  final String img;
+  final String ico;
+  final String uri;
+  final String sortNo;
+
+  factory CategoriesDatum.fromRawJson(String str) => CategoriesDatum.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory CategoriesDatum.fromJson(Map<String, dynamic> json) => CategoriesDatum(
+    identifier: json["identifier"],
+    parentId: json["parentID"],
+    categoryTitle: json["categoryTitle"],
+    img: json["IMG"],
+    ico: json["ICO"],
+    uri: json["URI"],
+    sortNo: json["sortNo"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "identifier": identifier,
+    "parentID": parentId,
+    "categoryTitle": categoryTitle,
+    "IMG": img,
+    "ICO": ico,
+    "URI": uri,
+    "sortNo": sortNo,
   };
 }
 
@@ -150,7 +142,7 @@ class Meta {
     required this.pagination,
   });
 
-  Pagination pagination;
+  final Pagination pagination;
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
@@ -175,12 +167,12 @@ class Pagination {
     required this.links,
   });
 
-  int total;
-  int count;
-  int perPage;
-  int currentPage;
-  int totalPages;
-  Links links;
+  final int total;
+  final int count;
+  final int perPage;
+  final int currentPage;
+  final int totalPages;
+  final Links links;
 
   factory Pagination.fromRawJson(String str) => Pagination.fromJson(json.decode(str));
 
@@ -210,7 +202,7 @@ class Links {
     required this.next,
   });
 
-  String? next;
+  final String next;
 
   factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
 
