@@ -1,4 +1,3 @@
-
 import 'package:cashback/controller/AppConstants.dart';
 import 'package:cashback/controller/add_to_fav_cubit.dart';
 import 'package:cashback/controller/all_products_controller.dart';
@@ -54,7 +53,7 @@ class _AllProductsState extends State<AllProducts> {
         }
       },
       child: ListView.builder(
-          itemCount:2,
+          itemCount:AllProductsController.listData.length,
           itemBuilder: (context, index){
             return Container(
               padding: EdgeInsets.all(10.sp),
@@ -132,7 +131,7 @@ class _AllProductsState extends State<AllProducts> {
                                       child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          AllProductsController.listData[index].categories!.data[0].categoryTitle,
+                                          AllProductsController.listData[index].categories.data.asMap().containsKey(0)?AllProductsController.listData[index].categories.data[0].categoryTitle:"N/A",
                                           style: GoogleFonts.roboto(
                                             fontSize: 14.0.sp,
                                             color: const Color(0xFF363636),
@@ -280,7 +279,7 @@ class _AllProductsState extends State<AllProducts> {
                                       onTap: (){
                                         context.read<AddToFavCubit>().addToFav(id:  AllProductsController.listData[index].identifier, context: context);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Cashback.like,
                                         color: Colors.black,
                                       ),
