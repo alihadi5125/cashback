@@ -375,8 +375,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 context.read<ProductTypesPageIndexCubit>().setTabIndex(index: x);
 
               },
-              children: const [
+              children:  [
                 AllProducts(),
+               // Container(),
                 AllFeaturedProducts(),
                 FavouriteProducts()
               ],

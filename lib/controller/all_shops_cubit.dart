@@ -13,7 +13,7 @@ class AllShopsCubit extends Cubit<AllShopsState> {
       print("page now is "+AllProductsController.page.toString());
       print("total Pages are "+AllProductsController.data.meta.pagination.totalPages.toString());
       var request = http.Request('GET',
-          Uri.parse('https://mobileapi.apopou.gr/api/retailers?page=${AllProductsController.page}'));
+          Uri.parse("https://mobileapi.apopou.gr/api/retailers?include=categories&fields=identifier,storeName,storeImgURL,storeCashback,coupons_count,products_count?page=${AllProductsController.page}"));
 
       emit(AllShopsLoading());
       http.StreamedResponse response = await request.send();
@@ -21,6 +21,7 @@ class AllShopsCubit extends Cubit<AllShopsState> {
       if (response.statusCode == 200) {
         String str=await response.stream.bytesToString();
         AllProductsController.data=AllStores.fromRawJson(str);
+        print(AllProductsController.data.data.toString());
         AllProductsController.listData.addAll(AllProductsController.data.data);
         AllProductsController.page=AllProductsController.page+1;
         print("length of data is ");
