@@ -1,6 +1,8 @@
 import 'package:cashback/controller/bottom_navigation_page_index_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
 import 'package:cashback/view/account.dart';
+import 'package:cashback/view/login_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +32,15 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           height: 1.sh,
           child: PageView(
             controller: pageController,
+            onPageChanged: (x){
+
+              if(x==4 && widget.guest==true){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+              }
+              else{
+                context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: x);
+              }
+            },
             children: [
               HomeScreen(guest:widget.guest),
               Container(),
@@ -83,14 +94,17 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           Expanded(
                             child: Align(
                               alignment: Alignment.topCenter,
-                              child: Text(
-                                'Home',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14.0.sp,
-                                  color: state==0?const Color(0xffFC4F08):const Color(0xffA7A7A7),
-                                  fontWeight: FontWeight.w500,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Home'.tr(),
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14.0.sp,
+                                    color: state==0?const Color(0xffFC4F08):const Color(0xffA7A7A7),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                             ),
                           )
@@ -125,14 +139,17 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           Expanded(
                             child: Align(
                               alignment: Alignment.topCenter,
-                              child: Text(
-                                'Products',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14.0.sp,
-                                  color: state==1?const Color(0xffFC4F08):const Color(0xffA7A7A7),
-                                  fontWeight: FontWeight.w500,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Products'.tr(),
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14.0.sp,
+                                    color: state==1?const Color(0xffFC4F08):const Color(0xffA7A7A7),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                             ),
                           )
@@ -144,7 +161,6 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                     child: InkWell(
                       onTap: (){
                             if(!widget.guest){
-
                               context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 2);
                               pageController.jumpToPage(2);
                             }
@@ -170,7 +186,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  'Refer a Friend',
+                                  'Refer a Friend'.tr(),
                                   style: GoogleFonts.roboto(
                                     fontSize: 14.0.sp,
                                     color: state==2?const Color(0xffFC4F08):const Color(0xffA7A7A7),
@@ -211,14 +227,17 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           Expanded(
                             child: Align(
                               alignment: Alignment.topCenter,
-                              child: Text(
-                                'Wishlist',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14.0.sp,
-                                  color: state==3?const Color(0xffFC4F08):const Color(0xffA7A7A7),
-                                  fontWeight: FontWeight.w500,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Wishlist'.tr(),
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14.0.sp,
+                                    color: state==3?const Color(0xffFC4F08):const Color(0xffA7A7A7),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                             ),
                           )
@@ -229,8 +248,15 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: (){
-                        context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 4);
-                        pageController.jumpToPage(4);
+                        if(!widget.guest){
+                          context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 4);
+                          pageController.jumpToPage(4);
+
+                        }
+                        else{
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                        }
+
                       },
                       child: Column(
                         children: [
@@ -250,14 +276,17 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                           Expanded(
                             child: Align(
                               alignment: Alignment.topCenter,
-                              child: Text(
-                                'Account',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14.0.sp,
-                                  color: state==4?const Color(0xffFC4F08):const Color(0xffA7A7A7),
-                                  fontWeight: FontWeight.w500,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Account'.tr(),
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14.0.sp,
+                                    color: state==4?const Color(0xffFC4F08):const Color(0xffA7A7A7),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                             ),
                           )

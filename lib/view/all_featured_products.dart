@@ -6,6 +6,7 @@ import 'package:cashback/controller/all_featured_controller.dart';
 import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -149,7 +150,7 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    'Cashback Up to ',
+                                    'Cashback Up to '.tr(),
                                     style: GoogleFonts.roboto(
                                       fontSize: 14.0.sp,
                                       color: const Color(0xFFA7A7A7),
@@ -208,7 +209,7 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
                                       child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          'Coupons',
+                                          'Coupons'.tr(),
                                           style: GoogleFonts.roboto(
                                             fontSize: 14.0.sp,
                                             color: const Color(0xFFA7A7A7),
@@ -263,7 +264,7 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
                                       child: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: Text(
-                                          'Products',
+                                          'Products'.tr(),
                                           style: GoogleFonts.roboto(
                                             fontSize: 14.0.sp,
                                             color: const Color(0xFFA7A7A7),

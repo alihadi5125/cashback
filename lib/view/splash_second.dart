@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SplashSecond extends StatefulWidget {
   const SplashSecond({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _SplashSecondState extends State<SplashSecond> {
                 top: -160.sp,
                 left: -60.sp,
                 child: Container(
-                  padding: EdgeInsets.only(right: 1.26.sw),
+                  padding: EdgeInsets.only(right: 0.88.sw),
                   width: 720.0,
                   height: 467.0.sp,
                   decoration: const BoxDecoration(
@@ -55,7 +56,7 @@ class _SplashSecondState extends State<SplashSecond> {
                 child: Container(
                   margin: EdgeInsets.only(left: 0.05.sw, right: 0.05.sw),
                   width: 341.0.sp,
-                  height: 651.0,
+                  height: 651.0.sp,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.0),
                     color: Colors.white,
@@ -70,7 +71,7 @@ class _SplashSecondState extends State<SplashSecond> {
                         height: 30.sp,
                       ),
                       Text(
-                        'Get Cashbacksfrom 50,000+ Brands',
+                        'Get Cashback\n from 50,000+ Brands'.tr(),
                         style: GoogleFonts.roboto(
                           fontSize: 20.0.sp,
                           color: const Color(0xFF363636),
@@ -83,7 +84,7 @@ class _SplashSecondState extends State<SplashSecond> {
                         height: 15.sp,
                       ),
                       Text(
-                        'Amazing platforms, Enjoy the Cashbacks\nand enjoy deals on every shopping',
+                        'Amazing platforms, Enjoy the Cashbacks\nand enjoy deals on every shopping'.tr(),
                         style: GoogleFonts.roboto(
                           fontSize: 16.0.sp,
                           color: const Color(0xFF363636),
@@ -99,14 +100,14 @@ class _SplashSecondState extends State<SplashSecond> {
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>const RegisterScreen()));
                           },
-                          child: CustomButton(title: "Register Now")),
+                          child: CustomButton(title: "Register Now".tr())),
                       SizedBox(
                         height: 0.02.sh,
                       ),
                       Center(
                         child: RichText(
                           text: TextSpan(
-                            text: 'Already Member?',
+                            text: 'Already Member?'.tr(),
                             style: GoogleFonts.roboto(
                               fontSize: 17.0.sp,
                               color: const Color(0xFF363636),
@@ -114,7 +115,7 @@ class _SplashSecondState extends State<SplashSecond> {
                               height: 1.06,
                             ),
                             children:  <TextSpan>[
-                              TextSpan(text: ' Sign In',
+                              TextSpan(text: ' Sign In'.tr(),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.push(context, MaterialPageRoute(

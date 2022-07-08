@@ -6,10 +6,13 @@ import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/categories_cubit.dart';
 import 'package:cashback/controller/logout_cubit.dart';
 import 'package:cashback/controller/parent_categories_cubit.dart';
+import 'package:cashback/controller/remove_fav_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/controller/signup_cubit.dart';
 import 'package:cashback/view/bottom_navigation_screen.dart';
+import 'package:cashback/view/splash_second.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +22,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'view/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SharePrefs.activateHomeTabController();
   await SharePrefs.init();
-  runApp(const MyApp());
+  runApp(EasyLocalization(
+      supportedLocales: [Locale('en', 'US'), Locale('el', 'GR')],
+      path: 'assets/translation',
+      saveLocale: true,
+      startLocale: Locale('el', 'GR'),
+
+      // -- change the path of the translation files
+
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -70,9 +83,15 @@ class MyApp extends StatelessWidget {
             BlocProvider<AddToFavCubit>(
               create: (BuildContext context) => AddToFavCubit(),
             ),
+            BlocProvider<RemoveFavCubit>(
+              create: (BuildContext context) => RemoveFavCubit(),
+            ),
           ],
 
           child: MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             debugShowCheckedModeBanner: false,
             title: 'First Method',
             // You can use the library anywhere in the app even in theme
@@ -84,7 +103,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      child: const SplashScreen()
+      child: SharePrefs.prefs!.getString("token")==null?SharePrefs.prefs!.getBool("initial")==null?const SplashScreen():SplashSecond(): BottomNavigationScreen(guest: false,)
      //  child: const BottomNavigationScreen()
     );
   }

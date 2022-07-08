@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final parentCategories = parentCategoriesFromMap(jsonString);
+//     final parentCategories = parentCategoriesFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
@@ -11,21 +11,21 @@ class ParentCategories {
     required this.meta,
   });
 
-  List<Datum> data;
-  Meta meta;
+  final List<Datum> data;
+  final Meta meta;
 
-  factory ParentCategories.fromJson(String str) => ParentCategories.fromMap(json.decode(str));
+  factory ParentCategories.fromRawJson(String str) => ParentCategories.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory ParentCategories.fromMap(Map<String, dynamic> json) => ParentCategories(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromMap(x))),
-    meta: Meta.fromMap(json["meta"]),
+  factory ParentCategories.fromJson(Map<String, dynamic> json) => ParentCategories(
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    meta: Meta.fromJson(json["meta"]),
   );
 
-  Map<String, dynamic> toMap() => {
-    "data": List<dynamic>.from(data.map((x) => x.toMap())),
-    "meta": meta.toMap(),
+  Map<String, dynamic> toJson() => {
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "meta": meta.toJson(),
   };
 }
 
@@ -36,51 +36,39 @@ class Datum {
     required this.categoryTitle,
     required this.img,
     required this.ico,
-    required this.categoryDescription,
     required this.uri,
-    required this.headTitle,
-    required this.metaDescription,
     required this.sortNo,
   });
 
-  int identifier;
-  String parentId;
-  String categoryTitle;
-  String img;
-  String ico;
-  String categoryDescription;
-  String uri;
-  String headTitle;
-  String metaDescription;
-  String sortNo;
+  final int identifier;
+  final String parentId;
+  final String categoryTitle;
+  final String img;
+  final String ico;
+  final String uri;
+  final String sortNo;
 
-  factory Datum.fromJson(String str) => Datum.fromMap(json.decode(str));
+  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromMap(Map<String, dynamic> json) => Datum(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     identifier: json["identifier"],
     parentId: json["parentID"],
     categoryTitle: json["categoryTitle"],
     img: json["IMG"],
     ico: json["ICO"],
-    categoryDescription: json["categoryDescription"]?? "",
     uri: json["URI"],
-    headTitle: json["headTitle"]??"",
-    metaDescription: json["metaDescription"]??"",
     sortNo: json["sortNo"],
   );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
     "identifier": identifier,
     "parentID": parentId,
     "categoryTitle": categoryTitle,
     "IMG": img,
     "ICO": ico,
-    "categoryDescription": categoryDescription,
     "URI": uri,
-    "headTitle": headTitle,
-    "metaDescription": metaDescription,
     "sortNo": sortNo,
   };
 }
@@ -90,18 +78,18 @@ class Meta {
     required this.pagination,
   });
 
-  Pagination pagination;
+  final Pagination pagination;
 
-  factory Meta.fromJson(String str) => Meta.fromMap(json.decode(str));
+  factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory Meta.fromMap(Map<String, dynamic> json) => Meta(
-    pagination: Pagination.fromMap(json["pagination"]),
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+    pagination: Pagination.fromJson(json["pagination"]),
   );
 
-  Map<String, dynamic> toMap() => {
-    "pagination": pagination.toMap(),
+  Map<String, dynamic> toJson() => {
+    "pagination": pagination.toJson(),
   };
 }
 
@@ -115,46 +103,46 @@ class Pagination {
     required this.links,
   });
 
-  int total;
-  int count;
-  int perPage;
-  int currentPage;
-  int totalPages;
-  Links links;
+  final int total;
+  final int count;
+  final int perPage;
+  final int currentPage;
+  final int totalPages;
+  final Links links;
 
-  factory Pagination.fromJson(String str) => Pagination.fromMap(json.decode(str));
+  factory Pagination.fromRawJson(String str) => Pagination.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory Pagination.fromMap(Map<String, dynamic> json) => Pagination(
+  factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
     total: json["total"],
     count: json["count"],
     perPage: json["per_page"],
     currentPage: json["current_page"],
     totalPages: json["total_pages"],
-    links: Links.fromMap(json["links"]),
+    links: Links.fromJson(json["links"]),
   );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
     "total": total,
     "count": count,
     "per_page": perPage,
     "current_page": currentPage,
     "total_pages": totalPages,
-    "links": links.toMap(),
+    "links": links.toJson(),
   };
 }
 
 class Links {
   Links();
 
-  factory Links.fromJson(String str) => Links.fromMap(json.decode(str));
+  factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory Links.fromMap(Map<String, dynamic> json) => Links(
+  factory Links.fromJson(Map<String, dynamic> json) => Links(
   );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
   };
 }

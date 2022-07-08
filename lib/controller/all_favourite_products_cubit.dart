@@ -23,11 +23,18 @@ class AllFavouriteProductsCubit extends Cubit<AllFavouriteProductsState> {
 
       if (response.statusCode == 200) {
         String str=await response.stream.bytesToString();
-        AllFavouriteController.data=FavouriteModel.fromRawJson(str);
-        AllFavouriteController.listData.addAll(AllFavouriteController.data.data);
-        AllFavouriteController.page=AllFavouriteController.page+1;
-        emit(AllFavouriteProductsLoaded());
-        return true;
+        try{
+          AllFavouriteController.data=FavouriteModel.fromRawJson(str);
+          AllFavouriteController.listData.addAll(AllFavouriteController.data.data);
+          AllFavouriteController.page=AllFavouriteController.page+1;
+          emit(AllFavouriteProductsLoaded());
+          return true;
+        }
+        catch(e){
+          return false;
+        }
+
+
       }
       else {
         emit(AllFavouriteProductsError());

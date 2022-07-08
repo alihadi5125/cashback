@@ -1,14 +1,19 @@
 import 'package:cashback/controller/LoginCubit/login_cubit.dart';
+import 'package:cashback/controller/product_types_page_index_cubit.dart';
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/view/bottom_navigation_screen.dart';
 import 'package:cashback/view/custom_widgets/custom_button.dart';
+import 'package:cashback/view/custom_widgets/snack_bar.dart';
 import 'package:cashback/view/custom_widgets/text_field.dart';
 import 'package:cashback/view/register_screen.dart';
 import 'package:cashback/view/splash_second.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,6 +23,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState(){
+    SharePrefs.activateHomeTabController();
+    context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
+    super.initState();
+
+  }
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -43,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       padding: EdgeInsets.only(right: 1.26.sw),
                       width: 720.0,
-                      height: 467.0.sp,
+                      height: .6.sh,
                       decoration: const BoxDecoration(
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(360.0, 233.5)),
@@ -68,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       margin: EdgeInsets.only(left: 0.05.sw, right: 0.05.sw),
                       width: 341.0.sp,
-                      height: 651.0.sp,
+                      height: .81.sh,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0),
                         color: Colors.white,
@@ -82,11 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 90.sp,
                           ),
                           SizedBox(
-                            height: 35.sp,
+                            height: 0.03.sh,
                           ),
                           Center(
                             child: Text(
-                              'Login',
+                              'Login'.tr(),
                               style: GoogleFonts.roboto(
                                 fontSize: 32.0.sp,
                                 color: const Color(0xFF363636),
@@ -99,9 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 20.sp,
                           ),
-                          SizedBox(
-                            height: 20.sp,
-                          ),
+
                           SizedBox(
                             height: 20.sp,
                             child: Row(
@@ -120,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Email',
+                                      'Email'.tr(),
                                       style: GoogleFonts.lato(
                                         fontSize: 14.0.sp,
                                         color: Colors.black,
@@ -134,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           CustomTextField(
-                            hintText: "Email",
+                            hintText: "Email".tr(),
                             controller: email,
                             obscureText: false,
                           ),
@@ -159,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Password',
+                                      'Password'.tr(),
                                       style: GoogleFonts.lato(
                                         fontSize: 14.0.sp,
                                         color: Colors.black,
@@ -173,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           CustomTextField(
-                            hintText: "Password",
+                            hintText: "Password".tr(),
                             controller: password,
                             obscureText: true,
                           ),
@@ -188,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 print('onTap Forget Password?');
                               },
                               child: Text(
-                                'Forget Password?',
+                                'Forget Password?'.tr(),
                                 style: GoogleFonts.roboto(
                                   fontSize: 14.0.sp,
                                   color: const Color(0xFF363636),
@@ -205,11 +215,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           BlocBuilder<LoginCubit, LoginState>(
                             builder: (context, state) {
                               return InkWell(
-                                  onTap: () {
-                                    context.read<LoginCubit>().userLogin(
-                                        context: context,
-                                        email: email.text,
-                                        password: password.text);
+                                  onTap: () async {
+                                    final Connectivity connectivity = Connectivity();
+                                    ConnectivityResult result= await connectivity.checkConnectivity();
+
+                                          if(result==ConnectivityResult.mobile || result == ConnectivityResult.wifi){
+                                            context.read<LoginCubit>().userLogin(
+                                                context: context,
+                                                email: email.text,
+                                                password: password.text);
+                                          }
+
+                                   else{
+                                     Snackbar.showSnack(
+                                         context: context, message: 'No Internet Connection'.tr());
+
+                                   }
+
 
                                   },
                                   child: state is LoginLoading?
@@ -226,14 +248,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: CircularProgressIndicator()
                               ),
                               )
-                                  :CustomButton(title: "LOGIN"));
+                                  :CustomButton(title: "LOGIN".tr()));
                             },
                           ),
                           SizedBox(
                             height: 20.sp,
                           ),
                           Text(
-                            'Get Register with',
+                            'Get Register with'.tr(),
                             style: GoogleFonts.roboto(
                               fontSize: 14.0.sp,
                               color: const Color(0xFF363636),
@@ -267,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Center(
                             child: RichText(
                               text: TextSpan(
-                                text: 'Create an Account?',
+                                text: 'Create an Account?'.tr(),
                                 style: GoogleFonts.roboto(
                                   fontSize: 17.0.sp,
                                   color: const Color(0xFF363636),
@@ -276,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: ' Sign Up',
+                                    text: ' Sign Up'.tr(),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         Navigator.push(
@@ -297,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 10.sp,
+                            height: 0.05.sh,
                           ),
                           Center(
                             child: InkWell(
@@ -307,7 +329,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )));
                               },
                               child: Text(
-                                "Login as a guest",
+                                "Login as a guest".tr(),
                                  style: GoogleFonts.roboto(
                                 fontSize: 17.0.sp,
                                 color:Colors.grey,

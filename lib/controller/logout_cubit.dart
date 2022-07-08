@@ -9,29 +9,25 @@ part 'logout_state.dart';
 class LogoutCubit extends Cubit<LogoutState> {
   LogoutCubit() : super(LogoutInitial());
   Future<void> logout({required BuildContext context, required bool guest}) async {
-    if(!guest){
-      var headers = {
-        'Authorization': 'Bearer ${SharePrefs.prefs!.getString("token")}'
-      };
+    var headers = {
+      'Authorization': 'Bearer ${SharePrefs.prefs!.getString("token")}'
+    };
 
-      showLoaderDialog(context);
-      var request = http.Request('POST', Uri.parse('https://mobileapi.apopou.gr/api/logout'));
+    showLoaderDialog(context);
+    var request = http.Request('POST', Uri.parse('https://mobileapi.apopou.gr/api/logout'));
 
-      request.headers.addAll(headers);
+    request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+    http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
-        print(await response.stream.bytesToString());
-      }
-      else {
-        print(response.reasonPhrase);
-      }
-    }
-    else{
+    if (response.statusCode == 200) {
+      Navigator.pop(context);
+      SharePrefs.prefs!.clear();
       Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
     }
 
 

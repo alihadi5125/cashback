@@ -31,10 +31,13 @@ dependencies:
   google_fonts: ^3.0.1
   awesome_dialog: ^2.2.1
   flutter_bloc: ^8.0.1
+  connectivity_plus: ^2.3.5
   email_validator: ^2.0.1
   pull_to_refresh: ^2.0.0
   shimmer: ^2.0.0
   snack: ^2.0.0
+  flutter_svg: ^1.1.1+1
+  easy_localization: ^3.0.1
   shared_preferences: ^2.0.15
   http: ^0.13.4
   dropdown_search: ^5.0.2
@@ -71,7 +74,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-  #   - images/a_dot_ham.jpeg
+    - assets/translation/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

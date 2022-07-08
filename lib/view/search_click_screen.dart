@@ -7,6 +7,7 @@ import 'package:cashback/controller/product_page_controller.dart';
 import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -72,7 +73,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                           ),
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Type in your text",
+                          hintText: "Type in your text".tr(),
                           fillColor: Colors.white70),
                     ),
                   ),
@@ -82,7 +83,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Cancel',
+                          'Cancel'.tr(),
                           style: GoogleFonts.roboto(
                             fontSize: 14.0.sp,
                             color: const Color(0xFF363636),
@@ -101,7 +102,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
               height: 80.sp,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: AllProductsController.data.data!.length,
+                  itemCount: AllProductsController.data.data.length,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(
@@ -130,7 +131,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: Text(
-                                AllProductsController.data.data![index].storeName.substring(0, 10),
+                                AllProductsController.data.data[index].categories.data.asMap().containsKey(0)?AllProductsController.data.data[index].categories.data[0].categoryTitle:"N/A",
                                 style: GoogleFonts.roboto(
                                   fontSize: 14.0.sp,
                                   color: const Color(0xFF363636),
@@ -154,7 +155,7 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Featured Categories',
+                  'Featured Categories'.tr(),
                   style: GoogleFonts.roboto(
                     fontSize: 14.0.sp,
                     color: const Color(0xFF363636),
@@ -172,14 +173,14 @@ class _SearchClickScreenState extends State<SearchClickScreen> {
               height: 100.sp,
               child: BlocBuilder<CategoriesCubit, CategoriesState>(
                 builder: (context, state) {
-                  return state is CategoriesLoading? Center(
+                  return state is CategoriesLoading? const Center(
                     child: CircularProgressIndicator(),
                   ): Wrap(
                     spacing: 8, // space between items
                     children:CategoriesController.data.data
                         .map((e) => Container(
-                      margin: EdgeInsets.only(right: 5, bottom: 5),
-                      padding: EdgeInsets.all(9),
+                      margin: const EdgeInsets.only(right: 5, bottom: 5),
+                      padding: const EdgeInsets.all(9),
                       decoration:  BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
                         color: const Color(0xFFE8E8E8),

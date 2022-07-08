@@ -18,7 +18,7 @@ class ParentCategoriesCubit extends Cubit<ParentCategoriesState> {
 
     if (response.statusCode == 200) {
       String str=await response.stream.bytesToString();
-      ParentCategoriesController.data=ParentCategories.fromJson(str);
+      ParentCategoriesController.data=ParentCategories.fromRawJson(str);
       emit(ParentCategoriesLoaded());
     }
     else {

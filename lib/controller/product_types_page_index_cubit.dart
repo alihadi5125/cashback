@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:meta/meta.dart';
 
 

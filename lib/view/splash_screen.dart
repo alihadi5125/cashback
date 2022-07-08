@@ -1,8 +1,10 @@
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/view/custom_widgets/custom_button.dart';
 import 'package:cashback/view/splash_second.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -73,14 +75,20 @@ class _SplashScreenState extends State<SplashScreen> {
                 left: 0,
                 right: 0,
                 top: 0.46.sh,
-                child: Text(
-                  'Our Prioirty is to provide the\n best services that meets your expectation\n and this is the sample description',
-                  style: GoogleFonts.roboto(
-                    fontSize: 17.0.sp,
-                    color: const Color(0xFF363636),
-                    fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15.sp),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Our Prioirty is to provide the\n best services that meets your expectation\n and this is the sample description'.tr(),
+                      style: GoogleFonts.roboto(
+                        fontSize: 17.0.sp,
+                        color: const Color(0xFF363636),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
               Positioned(
@@ -88,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 right: 0,
                 top: 0.55.sh,
                 child: Text(
-                  'Select your country',
+                  'Select your country'.tr(),
                   style: GoogleFonts.roboto(
                     fontSize: 16.0.sp,
                     color: Colors.black,
@@ -112,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       showSelectedItems: true,
                       disabledItemFn: (String s) => s.startsWith('I'),
                     ),
-                    items: ["Cyprus","Greek"],
+                    items: ["Greek".tr(),"Cyprus".tr()],
 
                     onChanged: print,
                     dropdownDecoratorProps: DropDownDecoratorProps(
@@ -122,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             borderRadius: BorderRadius.circular(12),
                             borderSide:
                                 const BorderSide(color: Color(0xffFFA07A))),
-                        hintText: "Cyprus",
+                        hintText: "Cyprus".tr(),
                       ),
                     ),
                   ),
@@ -135,10 +143,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   right: 0,
                   child: InkWell(
                     onTap: (){
+                      SharePrefs.prefs!.setBool("initial", true);
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>SplashSecond()));
                     },
                     child: CustomButton(
-                title: "ENTER",
+                title: "ENTER".tr(),
               ),
                   ))
             ],

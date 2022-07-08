@@ -1,24 +1,25 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/model/add_to_fav_model.dart';
+import 'package:cashback/model/remove_fav.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
+part 'remove_fav_state.dart';
 
+class RemoveFavCubit extends Cubit<RemoveFavState> {
+  RemoveFavCubit() : super(RemoveFavInitial());
 
-part 'add_to_fav_state.dart';
-
-class AddToFavCubit extends Cubit<AddToFavState> {
-  AddToFavCubit() : super(AddToFavInitial());
-
-  Future<void> addToFav({required int id, required BuildContext context}) async{
+  Future<void> removeFav({required int id, required BuildContext context}) async{
 
     var headers = {
       'Authorization': 'Bearer ${SharePrefs.prefs!.getString("token")}'
     };
-    var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/user/add/retailer-favorites/${id.toString()}'));
+    var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/user/remove/retailer-favorites/${id.toString()}'));
 
     request.headers.addAll(headers);
 
@@ -27,15 +28,16 @@ class AddToFavCubit extends Cubit<AddToFavState> {
     if (response.statusCode == 200) {
 
 
-      AddToFav data=AddToFav.fromJson(await response.stream.bytesToString());
+      RemoveFavModel data=RemoveFavModel.fromRawJson(await response.stream.bytesToString());
       if(data.success){
         dialogSucess(context);
+
       }
 
     }
     else {
       errorDialog(context);
-    print(response.reasonPhrase);
+      print(response.reasonPhrase);
     }
 
   }
@@ -45,9 +47,11 @@ class AddToFavCubit extends Cubit<AddToFavState> {
       dialogType: DialogType.SUCCES,
       animType: AnimType.BOTTOMSLIDE,
 
-      desc: 'Retailer Added to Favourites'.tr(),
+      desc: 'Retailer has been removed from favorites'.tr(),
 
       btnOkOnPress: () {
+        SharePrefs.controller!.jumpTo(0);
+
 
       },
     )..show();
@@ -59,8 +63,8 @@ class AddToFavCubit extends Cubit<AddToFavState> {
       dialogType: DialogType.ERROR,
       animType: AnimType.BOTTOMSLIDE,
 
-      desc: 'Already Added to Favourites'.tr(),
-        btnOkColor: Colors.red,
+      desc: 'Something went wrong'.tr(),
+      btnOkColor: Colors.red,
       btnOkOnPress: () {
 
       },

@@ -4,13 +4,16 @@ import 'package:cashback/controller/cashback_icons.dart';
 import 'package:cashback/controller/parent_categories_controller.dart';
 import 'package:cashback/controller/product_page_controller.dart';
 import 'package:cashback/controller/product_types_page_index_cubit.dart';
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
 import 'package:cashback/view/favourite_products.dart';
 import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/search_click_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -25,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  PageController controller=PageController(initialPage: 0);
+
   List<String> assetsArray = [
     "images/marketplace.png",
     "images/electronics.png",
@@ -42,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState(){
     super.initState();
     context.read<ParentCategoriesCubit>().parentCategories();
+
   }
 
   @override
@@ -115,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Type in your text",
+                          hintText: "Type in your text".tr(),
                           fillColor: Colors.white70),
                     ),
                   ),
@@ -131,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Expanded(
                           child: Text(
-                            'Categories',
+                            'Categories'.tr(),
                             style: GoogleFonts.roboto(
                               fontSize: 14.0.sp,
                               color: const Color(0xFF363636),
@@ -210,18 +214,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           flex: 4,
                           child: Container(
-                            width: 97.33,
+                            padding: EdgeInsets.all(15.sp),
+                            width: 97.33.sp,
                             height: 70.0.sp,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(11.0),
+                              borderRadius: BorderRadius.circular(11.0.sp),
                               color: Colors.white,
                             ),
                             child: Center(
-                              child: Image.asset(
-                                index>=assetsArray.length?assetsArray[0]:assetsArray[index],
-                                height: 35.sp,
-                                width: 70.sp,
-                              ),
+                              child: SvgPicture.network(
+                                width: 97.33.sp,
+                                height: 70.0.sp,
+                                fit:BoxFit.contain,
+                                "https://mobileapi.apopou.gr/${ParentCategoriesController.data.data[index].ico}",
+
+                              )
                             ),
                           ),
                         ),
@@ -275,13 +282,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: InkWell(
                           onTap: (){
-                            controller.jumpToPage(0);
+                            SharePrefs.controller!.jumpToPage(0);
                             context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
 
                           },
                           child: Center(
                             child: Text(
-                              'All',
+                              'All'.tr(),
                               style: GoogleFonts.roboto(
                                 fontSize: 14.0.sp,
                                 color: state==0?Colors.white:Color(0xff4D4D4D),
@@ -305,12 +312,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: (){
 
                             context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 1);
-                            controller.jumpToPage(1);
+                            SharePrefs.controller!.jumpToPage(1);
 
                           },
                           child: Center(
                             child: Text(
-                              'Featured',
+                              'Featured'.tr(),
                               style: GoogleFonts.roboto(
                                 fontSize: 14.0.sp,
                                 color: state==1?Colors.white:Color(0xff4D4D4D),
@@ -333,17 +340,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: InkWell(
                           onTap: (){
                             if(!widget.guest){
-                              controller.jumpToPage(2);
+                              SharePrefs.controller!.jumpToPage(2);
                               context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 2);
                             }
                             else{
+                              SharePrefs.prefs!.clear();
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
                             }
 
                           },
                           child: Center(
                             child: Text(
-                              'Favourite',
+                              'Favourite'.tr(),
                               style: GoogleFonts.roboto(
                                 fontSize: 14.0.sp,
                                 color: state==2?Colors.white:Color(0xff4D4D4D),
@@ -370,13 +378,13 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 0.45.sh,
             child: PageView(
               physics: NeverScrollableScrollPhysics(),
-              controller: controller,
+              controller: SharePrefs.controller,
               onPageChanged: (x){
                 context.read<ProductTypesPageIndexCubit>().setTabIndex(index: x);
 
               },
               children:  [
-                AllProducts(),
+                AllProducts(guest:widget.guest),
                // Container(),
                 AllFeaturedProducts(),
                 FavouriteProducts()

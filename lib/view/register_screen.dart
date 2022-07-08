@@ -1,9 +1,13 @@
+import 'package:cashback/controller/product_types_page_index_cubit.dart';
+import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/controller/signup_cubit.dart';
 import 'package:cashback/view/custom_widgets/custom_button.dart';
 import 'package:cashback/view/custom_widgets/snack_bar.dart';
 import 'package:cashback/view/custom_widgets/text_field.dart';
 import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/splash_second.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -24,6 +28,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
+  @override
+  void initState() {
+
+    super.initState();
+    SharePrefs.activateHomeTabController();
+    context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Center(
                             child: Text(
-                              'Register',
+                              'Register'.tr(),
                               style: GoogleFonts.roboto(
                                 fontSize: 32.0.sp,
                                 color: const Color(0xFF363636),
@@ -113,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Full Name',
+                                      'Full Name'.tr(),
                                       style: GoogleFonts.lato(
                                         fontSize: 14.0.sp,
                                         color: Colors.black,
@@ -127,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           CustomTextField(
-                            hintText: "Full Name",
+                            hintText: "Full Name".tr(),
                             controller: name,
                             obscureText: false,
                           ),
@@ -152,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Email',
+                                      'Email'.tr(),
                                       style: GoogleFonts.lato(
                                         fontSize: 14.0.sp,
                                         color: Colors.black,
@@ -166,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           CustomTextField(
-                            hintText: "Email",
+                            hintText: "Email".tr(),
                             controller: email,
                             obscureText: false,
                           ),
@@ -205,7 +216,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           CustomTextField(
-                            hintText: "Password",
+                            hintText: "Password".tr(),
                             controller: password,
                             obscureText: true,
                           ),
@@ -233,7 +244,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Confirm Password',
+                                      'Confirm Password'.tr(),
                                       style: GoogleFonts.lato(
                                         fontSize: 14.0.sp,
                                         color: Colors.black,
@@ -247,7 +258,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           CustomTextField(
-                            hintText: "Confirm Password",
+                            hintText: "Confirm Password".tr(),
                             controller: confirmPassword,
                             obscureText: true,
                           ),
@@ -257,35 +268,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           BlocBuilder<SignupCubit, SignupState>(
                             builder: (context, state) {
                               return InkWell(
-                                  onTap: () {
-                                    if(name.text.isEmpty || email.text.isEmpty || password.text.isEmpty
-                                    || confirmPassword.text.isEmpty
-                                    ){
-                                      Snackbar.showSnack(context: context, message: "username, email and password cannot be empty");
-                                    }
-                                    else{
-
-                                      if(password.text==confirmPassword.text){
-
-                                        if(password.text.length>7 || confirmPassword.text.length>7){
-                                          if(EmailValidator.validate(email.text)){
-                                            context.read<SignupCubit>().signUp(
-                                                name.text, email.text, password.text, context);
-                                          }
-                                          else{
-                                            Snackbar.showSnack(context: context, message: "Please Enter a Valid Email");
-                                          }
-                                        }
-                                        else{
-                                          Snackbar.showSnack(context: context, message: "Password Length should be greater than 7");
-                                        }
-
-
+                                  onTap: () async{
+                                    final Connectivity connectivity = Connectivity();
+                                    ConnectivityResult result= await connectivity.checkConnectivity();
+                                    if(result==ConnectivityResult.mobile || result == ConnectivityResult.wifi){
+                                      if(name.text.isEmpty || email.text.isEmpty || password.text.isEmpty
+                                          || confirmPassword.text.isEmpty
+                                      ){
+                                        Snackbar.showSnack(context: context, message: "username, email and password cannot be empty".tr());
                                       }
                                       else{
-                                        Snackbar.showSnack(context: context, message: "Password and Confirm Password doesn't match");
+
+                                        if(password.text==confirmPassword.text){
+
+                                          if(password.text.length>7 || confirmPassword.text.length>7){
+                                            if(EmailValidator.validate(email.text)){
+                                              context.read<SignupCubit>().signUp(
+                                                  name.text, email.text, password.text, context);
+                                            }
+                                            else{
+                                              Snackbar.showSnack(context: context, message: "Please Enter a Valid Email".tr());
+                                            }
+                                          }
+                                          else{
+                                            Snackbar.showSnack(context: context, message: "Password Length should be greater than 7".tr());
+                                          }
+
+
+                                        }
+                                        else{
+                                          Snackbar.showSnack(context: context, message: "Password and Confirm Password doesn't match".tr());
+                                        }
                                       }
                                     }
+                                    else{
+                                      Snackbar.showSnack(
+                                          context: context, message: 'No Internet Connection'.tr());
+                                    }
+
 
                                   },
                                   child: state is SignupLoading?Container(
@@ -300,14 +320,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: Center(
                               child: CircularProgressIndicator()
                               ),
-                              ):CustomButton(title: "SIGNUP"));
+                              ):CustomButton(title: "SIGNUP".tr()));
                             },
                           ),
                           SizedBox(
                             height: 20.sp,
                           ),
                           Text(
-                            'Get Register with',
+                            'Get Register with'.tr(),
                             style: GoogleFonts.roboto(
                               fontSize: 14.0.sp,
                               color: const Color(0xFF363636),
@@ -341,7 +361,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Center(
                             child: RichText(
                               text: TextSpan(
-                                text: 'Already Member?',
+                                text: 'Already Member?'.tr(),
                                 style: GoogleFonts.roboto(
                                   fontSize: 17.0.sp,
                                   color: const Color(0xFF363636),
@@ -349,7 +369,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   height: 1.06,
                                 ),
                                 children: <TextSpan>[
-                                  TextSpan(text: ' Sign In',
+                                  TextSpan(text: ' Sign In'.tr(),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         Navigator.push(context, MaterialPageRoute(
