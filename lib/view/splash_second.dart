@@ -29,7 +29,7 @@ class _SplashSecondState extends State<SplashSecond> {
                 top: -160.sp,
                 left: -60.sp,
                 child: Container(
-                  padding: EdgeInsets.only(right: 0.88.sw),
+                  padding: EdgeInsets.only(right: 1.23.sw),
                   width: 720.0,
                   height: 467.0.sp,
                   decoration: const BoxDecoration(
@@ -37,22 +37,14 @@ class _SplashSecondState extends State<SplashSecond> {
                         BorderRadius.all(Radius.elliptical(360.0, 233.5)),
                     color: Color(0xFFFC4F08),
                   ),
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const SplashScreen()));
-                    },
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 30.sp,
-                    ),
-                  ),
+                 
                 ),
               ),
+              
               Positioned(
                 left: 0,
                 right: 0,
-                top: 0.2.sh,
+                top: 0.17.sh,
                 child: Container(
                   margin: EdgeInsets.only(left: 0.05.sw, right: 0.05.sw),
                   width: 341.0.sp,
@@ -65,7 +57,7 @@ class _SplashSecondState extends State<SplashSecond> {
                     children: [
                       Image.asset(
                         "images/register_vector.png",
-                        height: 300.sp,
+                        height: .32.sh,
                       ),
                       SizedBox(
                         height: 30.sp,
@@ -136,6 +128,19 @@ class _SplashSecondState extends State<SplashSecond> {
                   ),
                 ),
               ),
+              Positioned(
+                  top: 0.06.sh,
+                  left: .04.sw,
+                  child:  InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const SplashScreen()));
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 30.sp,
+                ),
+              ))
             ],
           ),
         ));

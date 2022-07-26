@@ -386,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children:  [
                 AllProducts(guest:widget.guest),
                // Container(),
-                AllFeaturedProducts(),
+                AllFeaturedProducts(guest:widget.guest),
                 FavouriteProducts()
               ],
             ),

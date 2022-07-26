@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final allStores = allStoresFromJson(jsonString);
+//     final allFeatured = allFeaturedFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
@@ -11,8 +11,8 @@ class AllFeatured {
     required this.meta,
   });
 
-  List<Datum> data;
-  Meta meta;
+  final List<Datum> data;
+  final Meta meta;
 
   factory AllFeatured.fromRawJson(String str) => AllFeatured.fromJson(json.decode(str));
 
@@ -49,6 +49,7 @@ class Datum {
     required this.storeOfWeek,
     required this.noOfVisits,
     required this.status,
+    required this.favoriters,
     required this.flatShippingAmount,
     required this.aboveFlatShippingAmount,
     required this.apopouCommissionPercent,
@@ -58,31 +59,32 @@ class Datum {
     required this.productsCount,
   });
 
-  int identifier;
-  int networkId;
-  String networkProgramId;
-  String storeName;
-  String redirectUrl;
-  String storeImgUrl;
-  String storeCashback;
-  String storeTerms;
-  String shortDescription;
-  String storeDomain;
-  String storeTags;
-  String headTitle;
-  String metaDescription;
-  String shippingInfo;
-  int featuredStore;
-  int storeOfWeek;
-  int noOfVisits;
-  String status;
-  int flatShippingAmount;
-  int aboveFlatShippingAmount;
-  int apopouCommissionPercent;
-  String expiringDate;
-  DateTime createdOnDate;
-  int couponsCount;
-  int productsCount;
+  final int identifier;
+  final int networkId;
+  final String networkProgramId;
+  final String storeName;
+  final String redirectUrl;
+  final String storeImgUrl;
+  final String storeCashback;
+  final String storeTerms;
+  final String shortDescription;
+  final String storeDomain;
+  final String storeTags;
+  final String headTitle;
+  final String metaDescription;
+  final String shippingInfo;
+  final int featuredStore;
+  final int storeOfWeek;
+  final int noOfVisits;
+  final String status;
+   int favoriters;
+  final int flatShippingAmount;
+  final int aboveFlatShippingAmount;
+  final int apopouCommissionPercent;
+  final String expiringDate;
+  final String createdOnDate;
+  final int couponsCount;
+  final int productsCount;
 
   factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
 
@@ -107,11 +109,12 @@ class Datum {
     storeOfWeek: json["storeOfWeek"],
     noOfVisits: json["noOfVisits"],
     status: json["status"],
+    favoriters: json["favoriters"],
     flatShippingAmount: json["flatShippingAmount"],
     aboveFlatShippingAmount: json["aboveFlatShippingAmount"],
     apopouCommissionPercent: json["apopouCommissionPercent"],
     expiringDate: json["expiringDate"],
-    createdOnDate: DateTime.parse(json["createdOnDate"]),
+    createdOnDate: json["createdOnDate"],
     couponsCount: json["coupons_count"],
     productsCount: json["products_count"],
   );
@@ -135,11 +138,12 @@ class Datum {
     "storeOfWeek": storeOfWeek,
     "noOfVisits": noOfVisits,
     "status": status,
+    "favoriters": favoriters,
     "flatShippingAmount": flatShippingAmount,
     "aboveFlatShippingAmount": aboveFlatShippingAmount,
     "apopouCommissionPercent": apopouCommissionPercent,
     "expiringDate": expiringDate,
-    "createdOnDate": createdOnDate.toIso8601String(),
+    "createdOnDate": createdOnDate,
     "coupons_count": couponsCount,
     "products_count": productsCount,
   };
@@ -150,7 +154,7 @@ class Meta {
     required this.pagination,
   });
 
-  Pagination pagination;
+  final Pagination pagination;
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
@@ -175,12 +179,12 @@ class Pagination {
     required this.links,
   });
 
-  int total;
-  int count;
-  int perPage;
-  int currentPage;
-  int totalPages;
-  Links links;
+  final int total;
+  final int count;
+  final int perPage;
+  final int currentPage;
+  final int totalPages;
+  final Links links;
 
   factory Pagination.fromRawJson(String str) => Pagination.fromJson(json.decode(str));
 
@@ -206,21 +210,15 @@ class Pagination {
 }
 
 class Links {
-  Links({
-    required this.next,
-  });
-
-  String? next;
+  Links();
 
   factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
-    next: json["next"]??"",
   );
 
   Map<String, dynamic> toJson() => {
-    "next": next,
   };
 }

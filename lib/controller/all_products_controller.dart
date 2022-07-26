@@ -1,7 +1,7 @@
 
 
 import 'package:cashback/model/all_shops_model.dart';
-
+import 'package:get/get.dart';
 class AllProductsController {
   static AllStores data = AllStores(
       data: [],
@@ -16,3 +16,6 @@ class AllProductsController {
   static int page=1;
   static List<AllStoresDatum> listData=[];
 }
+
+
+

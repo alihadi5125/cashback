@@ -7,4 +7,5 @@ class AllFavouriteProductsInitial extends AllFavouriteProductsState {}
 class AllFavouriteProductsLoading extends AllFavouriteProductsState {}
 class AllFavouriteProductsLoaded extends AllFavouriteProductsState {}
 class AllFavouriteProductsError extends AllFavouriteProductsState {}
+class AllFavouriteProductsRelaod extends AllFavouriteProductsState {}
 

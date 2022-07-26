@@ -25,7 +25,6 @@ class _FavouriteProductsState extends State<FavouriteProducts> {
 
   @override
   void initState(){
-    print("all Products");
     AllFavouriteController.page=1;
     AllFavouriteController.listData.clear();
     super.initState();
@@ -41,24 +40,25 @@ class _FavouriteProductsState extends State<FavouriteProducts> {
       reverse: false,
       onRefresh: () async {
         SharePrefs.refreshController.requestRefresh();
-        final result =await context.read<AllFavouriteProductsCubit>().allFavouriteProducts();
+        final result =await context.read<AllFavouriteProductsCubit>().allFavouriteProducts(reload: false);
         if (result) {
           SharePrefs.refreshController.refreshCompleted();
         } else {
-
+          SharePrefs.refreshController.refreshCompleted();
           SharePrefs.refreshController.loadNoData();
         }
       },
       onLoading: () async {
         SharePrefs.refreshController.requestLoading();
-        final result =await context.read<AllFavouriteProductsCubit>().allFavouriteProducts();
+        final result =await context.read<AllFavouriteProductsCubit>().allFavouriteProducts(reload: false);
         if (result) {
           SharePrefs.refreshController.loadComplete();
         } else {
+          SharePrefs.refreshController.refreshCompleted();
           SharePrefs.refreshController.loadNoData();
         }
       },
-      child: ListView.builder(
+      child: state is AllFavouriteProductsRelaod?Center(child: const CircularProgressIndicator()): ListView.builder(
           itemCount: AllFavouriteController.listData.length,
           itemBuilder: (context, index){
             return Container(
@@ -283,13 +283,19 @@ class _FavouriteProductsState extends State<FavouriteProducts> {
                                     alignment: Alignment.bottomCenter,
                                     child: InkWell(
                                       onTap: (){
-                                        context.read<RemoveFavCubit>().removeFav(id: AllFavouriteController.listData[index].identifier, context: context).whenComplete(() {
 
-                                        });
+                                        context.read<RemoveFavCubit>().removeFav(type:"fav",id:AllFavouriteController.listData[index].identifier, context: context,
+                                        index: index,
+                                        );
+                                        AllFavouriteController.page=1;
+                                        AllFavouriteController.listData.clear();
+                                        context.read<AllFavouriteProductsCubit>().allFavouriteProducts(reload:true);
+                                        SharePrefs.refreshController.loadComplete();
+
                                       },
                                       child: Icon(
-                                        Cashback.like,
-                                        color: Colors.black,
+                                        Icons.favorite,
+                                        color:Colors.red,
                                       ),
                                     ),
                                   ),

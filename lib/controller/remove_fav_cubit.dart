@@ -1,5 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cashback/controller/all_featured_controller.dart';
+import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/model/add_to_fav_model.dart';
@@ -14,15 +16,20 @@ part 'remove_fav_state.dart';
 class RemoveFavCubit extends Cubit<RemoveFavState> {
   RemoveFavCubit() : super(RemoveFavInitial());
 
-  Future<void> removeFav({required int id, required BuildContext context}) async{
+  Future<void> removeFav({required int id, required BuildContext context, required int index,
+  required String type,
+  }) async{
 
     var headers = {
       'Authorization': 'Bearer ${SharePrefs.prefs!.getString("token")}'
     };
-    var request = http.Request('GET', Uri.parse('https://mobileapi.apopou.gr/api/user/remove/retailer-favorites/${id.toString()}'));
+    var request = http.MultipartRequest('POST', Uri.parse('https://mobileapi.apopou.gr/api/user/remove/retailer-favorites'));
+    request.fields.addAll({
+      'retailer_id': id.toString()
+    });
 
     request.headers.addAll(headers);
-
+    dialogSucess(context);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
@@ -30,8 +37,16 @@ class RemoveFavCubit extends Cubit<RemoveFavState> {
 
       RemoveFavModel data=RemoveFavModel.fromRawJson(await response.stream.bytesToString());
       if(data.success){
-        dialogSucess(context);
+        Navigator.pop(context);
+        if(type=="all"){
+          AllProductsController.listData[index].favoriters=0;
+        }
+        if(type=="feature"){
+          AllFeatureController.listData[index].favoriters=0;
+        }
+        if(type=="fav"){
 
+        }
       }
 
     }
@@ -41,20 +56,23 @@ class RemoveFavCubit extends Cubit<RemoveFavState> {
     }
 
   }
-  dialogSucess(BuildContext context){
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.SUCCES,
-      animType: AnimType.BOTTOMSLIDE,
+  dialogSucess(BuildContext context)  {
+    showDialog(
+        context: context,
+        builder: (_) => new Dialog(
+          insetPadding: EdgeInsets.all(50),
+          backgroundColor: Colors.white,
+          child: new Container(
+              alignment: FractionalOffset.center,
+              height: 80.0,
+              width: 10,
+              padding: const EdgeInsets.all(20.0),
+              child: Center(child: CircularProgressIndicator(
+                color: Colors.red,
+              ))
+          ),
+        ));
 
-      desc: 'Retailer has been removed from favorites'.tr(),
-
-      btnOkOnPress: () {
-        SharePrefs.controller!.jumpTo(0);
-
-
-      },
-    )..show();
   }
 
   errorDialog(BuildContext context){

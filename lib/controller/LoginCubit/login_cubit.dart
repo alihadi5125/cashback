@@ -7,6 +7,7 @@ import 'package:cashback/model/login_model.dart';
 import 'package:cashback/view/bottom_navigation_screen.dart';
 import 'package:cashback/view/custom_widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
+import "package:easy_localization/easy_localization.dart";
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
     if (email!.isEmpty || password!.isEmpty) {
       Snackbar.showSnack(
-          context: context, message: 'Please enter email & password.');
+          context: context, message: 'Please enter email & password.'.tr());
     } else {
       print(email);
       print(password);
@@ -54,13 +55,13 @@ class LoginCubit extends Cubit<LoginState> {
         catch(e){
          emit(LoginError());
           Snackbar.showSnack(
-              context: context, message: 'Incorrect Email or Password');
+              context: context, message: 'Incorrect Email or Password'.tr());
         }
       }
       else {
         emit(LoginError());
         Snackbar.showSnack(
-            context: context, message: 'Incorrect Email or Password');
+            context: context, message: 'Incorrect Email or Password'.tr());
         print(response.reasonPhrase);
       }
     }

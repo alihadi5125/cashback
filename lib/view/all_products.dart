@@ -3,6 +3,8 @@ import 'package:cashback/controller/add_to_fav_cubit.dart';
 import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
+import 'package:cashback/controller/remove_fav_cubit.dart';
+import 'package:cashback/view/all_shops_heart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +20,7 @@ class AllProducts extends StatefulWidget {
 }
 
 class _AllProductsState extends State<AllProducts> {
+
   final RefreshController refreshController =
   RefreshController(initialRefresh: true);
   @override
@@ -38,7 +41,7 @@ class _AllProductsState extends State<AllProducts> {
       reverse: false,
       onRefresh: () async {
         refreshController.requestRefresh();
-        final result =await context.read<AllShopsCubit>().allShops();
+        final result =await context.read<AllShopsCubit>().allShops(reload: false);
         if (result) {
           refreshController.refreshCompleted();
         } else {
@@ -47,14 +50,14 @@ class _AllProductsState extends State<AllProducts> {
       },
       onLoading: () async {
         refreshController.requestLoading();
-        final result =await context.read<AllShopsCubit>().allShops();
+        final result =await context.read<AllShopsCubit>().allShops(reload: false);
         if (result) {
           refreshController.loadComplete();
         } else {
           refreshController.loadNoData();
         }
       },
-      child: ListView.builder(
+      child: state is Reload?Center(child: const CircularProgressIndicator()):ListView.builder(
           itemCount:AllProductsController.listData.length,
           itemBuilder: (context, index){
             return Container(
@@ -277,21 +280,7 @@ class _AllProductsState extends State<AllProducts> {
                                  Expanded(
                                   child: Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: InkWell(
-                                      onTap: (){
-                                        if(widget.guest){
-
-                                        }
-                                        else{
-                                          context.read<AddToFavCubit>().addToFav(id:  AllProductsController.listData[index].identifier, context: context);
-                                        }
-
-                                      },
-                                      child: const Icon(
-                                        Cashback.like,
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                                    child: AllShopsHeart(index: index,guest: widget.guest,)
                                   ),
                                 )
                               ],

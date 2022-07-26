@@ -104,6 +104,7 @@ class MyApp extends StatelessWidget {
         );
       },
       child: SharePrefs.prefs!.getString("token")==null?SharePrefs.prefs!.getBool("initial")==null?const SplashScreen():SplashSecond(): BottomNavigationScreen(guest: false,)
+     // child: SharePrefs.prefs!.getString("token")==null?SharePrefs.prefs!.getBool("initial")==null?const SplashScreen():SplashSecond(): SplashSecond()
      //  child: const BottomNavigationScreen()
     );
   }

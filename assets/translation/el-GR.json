@@ -28,7 +28,7 @@
   "Create an Account?": "Δημιουργία Λογαριασμού?",
   " Sign Up": " Εγγραφείτε",
   "Login as a guest": "Δεν θέλω να συνδεθώ",
-  "Type in your text": "Πληκτρολογήστε το κείμενό σας",
+  "Type in your text": "Αναζήτηση Καταστήματος",
   "Categories": "Κατηγορίες",
   "All": "Όλα",
   "Featured": "Προτεινόμενα Καταστήματα",
@@ -53,5 +53,8 @@
   "Retailer Added to Favourites": "Έμπορος λιανικής Προστέθηκε στα Αγαπημένα",
   "Already Added to Favourites": "Προστέθηκε ήδη στα Αγαπημένα",
   "Retailer has been removed from favorites": "Ο πωλητής λιανικής έχει αφαιρεθεί από τα αγαπημένα",
-  "Something went wrong": "Κάτι πήγε στραβά"
+  "Something went wrong": "Κάτι πήγε στραβά",
+  "User Already Exist": "Αυτό το Email χρησιμοποιείται ήδη",
+  "Please enter email & password.": "Παρακαλώ εισάγετε Email και Password",
+  "Incorrect Email or Password": "λανθασμένο email ή κωδικό πρόσβασης"
 }

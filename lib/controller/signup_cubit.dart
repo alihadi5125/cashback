@@ -4,6 +4,7 @@ import 'package:cashback/model/sign_up_model.dart';
 import 'package:cashback/view/bottom_navigation_screen.dart';
 import 'package:cashback/view/custom_widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,7 +33,7 @@ class SignupCubit extends Cubit<SignupState> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => BottomNavigationScreen(guest: false,)));
       } catch (e) {
-        Snackbar.showSnack(context: context, message: "User Already Exist");
+        Snackbar.showSnack(context: context, message: "User Already Exist".tr());
       }
     } else {
       print(response.reasonPhrase);

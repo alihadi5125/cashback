@@ -53,5 +53,8 @@
   "Retailer Added to Favourites": "Retailer Added to Favourites",
   "Already Added to Favourites": "Already Added to Favourites",
   "Retailer has been removed from favorites": "Retailer has been removed from favorites",
-  "Something went wrong": "Something went wrong"
+  "Something went wrong": "Something went wrong",
+  "User Already Exist": "User Already Exist",
+  "Please enter email & password.": "Please enter email & password.",
+  "Incorrect Email or Password": "Incorrect Email or Password"
 }

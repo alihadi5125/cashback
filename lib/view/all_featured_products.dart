@@ -6,6 +6,8 @@ import 'package:cashback/controller/all_featured_controller.dart';
 import 'package:cashback/controller/all_products_controller.dart';
 import 'package:cashback/controller/all_shops_cubit.dart';
 import 'package:cashback/controller/cashback_icons.dart';
+import 'package:cashback/controller/remove_fav_cubit.dart';
+import 'package:cashback/view/featured_heart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +15,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 class AllFeaturedProducts extends StatefulWidget {
-  const AllFeaturedProducts({Key? key}) : super(key: key);
+  bool guest;
+  AllFeaturedProducts({required this.guest});
 
   @override
   State<AllFeaturedProducts> createState() => _AllFeaturedProductsState();
@@ -41,7 +44,7 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
         reverse: false,
         onRefresh: () async {
           refreshController.requestRefresh();
-          final result =await context.read<AllFeatureShopsCubit>().allFeatureShops();
+          final result =await context.read<AllFeatureShopsCubit>().allFeatureShops(reload: false);
           if (result) {
             refreshController.refreshCompleted();
           } else {
@@ -50,15 +53,15 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
         },
         onLoading: () async {
           refreshController.requestLoading();
-          final result =await context.read<AllFeatureShopsCubit>().allFeatureShops();
+          final result =await context.read<AllFeatureShopsCubit>().allFeatureShops(reload:  false);
           if (result) {
             refreshController.loadComplete();
           } else {
             refreshController.loadNoData();
           }
         },
-             child: ListView.builder(
-        itemCount:AllFeatureController.data.data.length,
+             child:state is AllFeatureShopsReload?Center(child: const CircularProgressIndicator()): ListView.builder(
+        itemCount:AllFeatureController.listData.length,
         itemBuilder: (context, index){
       return Container(
         padding: EdgeInsets.all(10.sp),
@@ -278,18 +281,7 @@ class _AllFeaturedProductsState extends State<AllFeaturedProducts> {
                               ),
                             ),
                              Expanded(
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                  onTap: (){
-                                    context.read<AddToFavCubit>().addToFav(id:  AllFeatureController.listData[index].identifier, context: context);
-                                  },
-                                  child: Icon(
-                                    Cashback.like,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
+                              child:FeaturedHeart(index: index, guest: widget.guest,)
                             )
                           ],
                         ),

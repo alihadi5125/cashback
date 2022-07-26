@@ -8,7 +8,7 @@ part 'all_favourite_products_state.dart';
 
 class AllFavouriteProductsCubit extends Cubit<AllFavouriteProductsState> {
   AllFavouriteProductsCubit() : super(AllFavouriteProductsInitial());
-  Future<bool> allFavouriteProducts() async{
+  Future<bool> allFavouriteProducts({required bool reload}) async{
 
     if(AllFavouriteController.page<=AllFavouriteController.data.meta.pagination.totalPages){
       var headers = {
@@ -27,7 +27,16 @@ class AllFavouriteProductsCubit extends Cubit<AllFavouriteProductsState> {
           AllFavouriteController.data=FavouriteModel.fromRawJson(str);
           AllFavouriteController.listData.addAll(AllFavouriteController.data.data);
           AllFavouriteController.page=AllFavouriteController.page+1;
-          emit(AllFavouriteProductsLoaded());
+
+          if(reload){
+            emit(AllFavouriteProductsRelaod());
+            await Future.delayed(const Duration(milliseconds: 800));
+            emit(AllFavouriteProductsLoaded());
+          }
+          else{
+            emit(AllFavouriteProductsLoaded());
+          }
+
           return true;
         }
         catch(e){

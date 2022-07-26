@@ -5,7 +5,7 @@ class AllFeatureController {
       meta: Meta(
           pagination: Pagination(
               currentPage: 0,
-              links: Links(next: ''),
+              links: Links(),
               perPage: 0,
               count: 0,
               total: 9,

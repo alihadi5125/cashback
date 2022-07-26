@@ -11,8 +11,8 @@ class AllStores {
     required this.meta,
   });
 
-  List<AllStoresDatum> data;
-  Meta meta;
+  final List<AllStoresDatum> data;
+  final Meta meta;
 
   factory AllStores.fromRawJson(String str) => AllStores.fromJson(json.decode(str));
 
@@ -35,18 +35,20 @@ class AllStoresDatum {
     required this.storeName,
     required this.storeImgUrl,
     required this.storeCashback,
+    required this.favoriters,
     required this.couponsCount,
     required this.productsCount,
     required this.categories,
   });
 
-  int identifier;
-  String storeName;
-  String storeImgUrl;
-  String storeCashback;
-  int couponsCount;
-  int productsCount;
-  Categories categories;
+  final int identifier;
+  final String storeName;
+  final String storeImgUrl;
+  final String storeCashback;
+    int favoriters;
+  final int couponsCount;
+  final int productsCount;
+  final Categories categories;
 
   factory AllStoresDatum.fromRawJson(String str) => AllStoresDatum.fromJson(json.decode(str));
 
@@ -57,8 +59,9 @@ class AllStoresDatum {
     storeName: json["storeName"],
     storeImgUrl: json["storeImgURL"],
     storeCashback: json["storeCashback"],
+    favoriters: json["favoriters"],
     couponsCount: json["coupons_count"],
-    productsCount: json["products_count"]??0,
+    productsCount: json["products_count"],
     categories: Categories.fromJson(json["categories"]),
   );
 
@@ -67,6 +70,7 @@ class AllStoresDatum {
     "storeName": storeName,
     "storeImgURL": storeImgUrl,
     "storeCashback": storeCashback,
+    "favoriters": favoriters,
     "coupons_count": couponsCount,
     "products_count": productsCount,
     "categories": categories.toJson(),
@@ -78,7 +82,7 @@ class Categories {
     required this.data,
   });
 
-  List<CategoriesDatum> data;
+  final List<CategoriesDatum> data;
 
   factory Categories.fromRawJson(String str) => Categories.fromJson(json.decode(str));
 
@@ -104,13 +108,13 @@ class CategoriesDatum {
     required this.sortNo,
   });
 
-  int identifier;
-  String parentId;
-  String categoryTitle;
-  String img;
-  String ico;
-  String uri;
-  String sortNo;
+  final int identifier;
+  final String parentId;
+  final String categoryTitle;
+  final String img;
+  final String ico;
+  final String uri;
+  final String sortNo;
 
   factory CategoriesDatum.fromRawJson(String str) => CategoriesDatum.fromJson(json.decode(str));
 
@@ -142,7 +146,7 @@ class Meta {
     required this.pagination,
   });
 
-  Pagination pagination;
+  final Pagination pagination;
 
   factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
@@ -167,12 +171,12 @@ class Pagination {
     required this.links,
   });
 
-  int total;
-  int count;
-  int perPage;
-  int currentPage;
-  int totalPages;
-  Links links;
+  final int total;
+  final int count;
+  final int perPage;
+  final int currentPage;
+  final int totalPages;
+  final Links links;
 
   factory Pagination.fromRawJson(String str) => Pagination.fromJson(json.decode(str));
 
@@ -202,14 +206,14 @@ class Links {
     required this.next,
   });
 
-  String next;
+  final String next;
 
   factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
-    next: json["next"],
+    next: json["next"]??"",
   );
 
   Map<String, dynamic> toJson() => {
