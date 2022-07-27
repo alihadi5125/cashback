@@ -56,5 +56,6 @@
   "Something went wrong": "Κάτι πήγε στραβά",
   "User Already Exist": "Αυτό το Email χρησιμοποιείται ήδη",
   "Please enter email & password.": "Παρακαλώ εισάγετε Email και Password",
-  "Incorrect Email or Password": "λανθασμένο email ή κωδικό πρόσβασης"
+  "Incorrect Email or Password": "λανθασμένο email ή κωδικό πρόσβασης",
+  "Logging Out... Please Wait": "Έξοδος... Παρακαλώ Περιμένετε"
 }

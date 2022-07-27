@@ -56,5 +56,6 @@
   "Something went wrong": "Something went wrong",
   "User Already Exist": "User Already Exist",
   "Please enter email & password.": "Please enter email & password.",
-  "Incorrect Email or Password": "Incorrect Email or Password"
+  "Incorrect Email or Password": "Incorrect Email or Password",
+  "Logging Out... Please Wait": "Logging Out... Please Wait"
 }

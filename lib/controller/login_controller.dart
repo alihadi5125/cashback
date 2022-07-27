@@ -1,6 +1,8 @@
 import 'package:cashback/model/login_model.dart';
+import 'package:flutter/material.dart';
 
 class LoginController {
+
   static LoginModel data = LoginModel(
       tokenType: '',
       data: Data(

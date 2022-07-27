@@ -4,6 +4,7 @@ import 'package:cashback/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:easy_localization/easy_localization.dart';
 part 'logout_state.dart';
 
 class LogoutCubit extends Cubit<LogoutState> {
@@ -37,7 +38,7 @@ class LogoutCubit extends Cubit<LogoutState> {
       content: Row(
         children: [
           const CircularProgressIndicator(),
-          Container(margin: const EdgeInsets.only(left: 7),child:const Text("Logging Out... Please Wait" )),
+          Container(margin: const EdgeInsets.only(left: 7),child:Text("Logging Out... Please Wait".tr())),
         ],),
     );
     showDialog(barrierDismissible: false,

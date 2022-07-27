@@ -18,6 +18,12 @@ class BottomNavigationScreen extends StatefulWidget {
 
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   PageController pageController=PageController(initialPage: 0);
+
+  @override
+  void initState(){
+    context.read<BottomNavigationPageIndexCubit>().setPageIndex(index: 0);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

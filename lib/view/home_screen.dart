@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState(){
     super.initState();
+    context.read<ProductTypesPageIndexCubit>().setTabIndex(index: 0);
     context.read<ParentCategoriesCubit>().parentCategories();
 
   }
