@@ -5,7 +5,10 @@ import 'package:cashback/view/bottom_navigation_screen.dart';
 import 'package:cashback/view/custom_widgets/custom_button.dart';
 import 'package:cashback/view/custom_widgets/snack_bar.dart';
 import 'package:cashback/view/custom_widgets/text_field.dart';
+import 'package:cashback/view/forget_password_views/code_confirmation.dart';
 import 'package:cashback/view/forget_password_views/forget_password.dart';
+import 'package:cashback/view/forget_password_views/password_success.dart';
+import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/register_screen.dart';
 import 'package:cashback/view/splash_second.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,14 +19,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SetYourPassword extends StatefulWidget {
+  const SetYourPassword({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SetYourPassword> createState() => _SetYourPasswordState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SetYourPasswordState extends State<SetYourPassword> {
   @override
   void initState(){
     SharePrefs.activateHomeTabController();
@@ -64,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: InkWell(
                         onTap: () {
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>SplashSecond()));
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>CodeConfirmation()));
                         },
                         child: Icon(
                           Icons.arrow_back,
@@ -88,29 +91,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: ListView(
                         padding:
-                            EdgeInsets.only(left: 20.sp, right: 20.sp, top: 20.sp),
+                            EdgeInsets.only(left: 20.sp, right: 20.sp, top:40.sp),
                         children: [
                           Image.asset(
-                            "images/logo_orange.png",
-                            height: 90.sp,
+                            "images/set_password.png",
+                            height: 110.sp,
                           ),
                           SizedBox(
                             height: 0.03.sh,
                           ),
-                          Center(
-                            child: Text(
-                              'Login'.tr(),
-                              style: GoogleFonts.roboto(
-                                fontSize: 32.0.sp,
-                                color: const Color(0xFF363636),
-                                fontWeight: FontWeight.w900,
-                                height: 1.22,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                      Center(
+                        child: Text(
+                          'Set your Password',
+                          style: GoogleFonts.roboto(
+                            fontSize: 26.0.sp,
+                            color: const Color(0xFF363636),
+                            fontWeight: FontWeight.w900,
+                            height: 1.08,
                           ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+
                           SizedBox(
-                            height: 20.sp,
+                            height: 0.1.sh,
                           ),
 
                           SizedBox(
@@ -121,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Icon(
-                                      Icons.email_outlined,
+                                      Icons.lock_outline_sharp,
                                       color: Color(0xffFC4F08),
                                     ),
                                   ),
@@ -131,46 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Email'.tr(),
-                                      style: GoogleFonts.lato(
-                                        fontSize: 14.0.sp,
-                                        color: Colors.black,
-                                        letterSpacing: 0.168,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          CustomTextField(
-                            hintText: "Email".tr(),
-                            controller: email,
-                            obscureText: false,
-                          ),
-                          SizedBox(
-                            height: 20.sp,
-                          ),
-                          SizedBox(
-                            height: 20.sp,
-                            child: Row(
-                              children: [
-                                const Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(
-                                      Icons.lock_open_outlined,
-                                      color: Color(0xffFC4F08),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 6,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      'Password'.tr(),
+                                      'Set New Password'.tr(),
                                       style: GoogleFonts.lato(
                                         fontSize: 14.0.sp,
                                         color: Colors.black,
@@ -185,30 +150,55 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           CustomTextField(
                             hintText: "Password".tr(),
-                            controller: password,
+                            controller: email,
+                            obscureText: false,
+                          ),
+                          SizedBox(
+                            height: 20.sp,
+                          ),
+
+
+                          SizedBox(
+                            height: 20.sp,
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Icon(
+                                      Icons.lock_outline_sharp,
+                                      color: Color(0xffFC4F08),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 6,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Confirm New Password'.tr(),
+                                      style: GoogleFonts.lato(
+                                        fontSize: 14.0.sp,
+                                        color: Colors.black,
+                                        letterSpacing: 0.168,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          CustomTextField(
+                            hintText: "Password".tr(),
+                            controller: email,
                             obscureText: true,
+
                           ),
                           SizedBox(
                             height: 10.sp,
                           ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              onTap: () {
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPasswordScreen()));
-                              },
-                              child: Text(
-                                'Forget Password?'.tr(),
-                                style: GoogleFonts.roboto(
-                                  fontSize: 14.0.sp,
-                                  color: const Color(0xFF363636),
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.29,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
+
                           SizedBox(
                             height: 0.05.sh,
                           ),
@@ -216,21 +206,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (context, state) {
                               return InkWell(
                                   onTap: () async {
-                                    final Connectivity connectivity = Connectivity();
-                                    ConnectivityResult result= await connectivity.checkConnectivity();
-
-                                          if(result==ConnectivityResult.mobile || result == ConnectivityResult.wifi){
-                                            context.read<LoginCubit>().userLogin(
-                                                context: context,
-                                                email: email.text,
-                                                password: password.text);
-                                          }
-
-                                   else{
-                                     Snackbar.showSnack(
-                                         context: context, message: 'No Internet Connection'.tr());
-
-                                   }
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PasswordSuccess()));
+                                   //  final Connectivity connectivity = Connectivity();
+                                   //  ConnectivityResult result= await connectivity.checkConnectivity();
+                                   //
+                                   //        if(result==ConnectivityResult.mobile || result == ConnectivityResult.wifi){
+                                   //          context.read<LoginCubit>().userLogin(
+                                   //              context: context,
+                                   //              email: email.text,
+                                   //              password: password.text);
+                                   //        }
+                                   //
+                                   // else{
+                                   //   Snackbar.showSnack(
+                                   //       context: context, message: 'No Internet Connection'.tr());
+                                   //
+                                   // }
 
 
                                   },
@@ -248,97 +239,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: CircularProgressIndicator()
                               ),
                               )
-                                  :CustomButton(title: "LOGIN".tr()));
+                                  :CustomButton(title: "SET NEW PASSWORD".tr()));
                             },
                           ),
-                          SizedBox(
-                            height: 20.sp,
-                          ),
-                          Text(
-                            'Get Register with'.tr(),
-                            style: GoogleFonts.roboto(
-                              fontSize: 14.0.sp,
-                              color: const Color(0xFF363636),
-                              fontWeight: FontWeight.w500,
-                              height: 1.07,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 20.sp,
-                          ),
-                          SizedBox(
-                            height: 40.sp,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Image.asset("images/google.png"),
-                                ),
-                                Expanded(
-                                  child: Image.asset("images/facebook.png"),
-                                ),
-                                Expanded(
-                                  child: Image.asset("images/apple.png"),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20.sp,
-                          ),
-                          Center(
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Create an Account?'.tr(),
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17.0.sp,
-                                  color: const Color(0xFF363636),
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.06,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: ' Sign Up'.tr(),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RegisterScreen()));
-                                      },
-                                    style: GoogleFonts.roboto(
-                                      fontSize: 16.0.sp,
-                                      color: Colors.black,
-                                      letterSpacing: 0.192,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  )..recognizer
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.05.sh,
-                          ),
-                          Center(
-                            child: InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationScreen(
-                                  guest:true
-                                )));
-                              },
-                              child: Text(
-                                "Login as a guest".tr(),
-                                 style: GoogleFonts.roboto(
-                                fontSize: 17.0.sp,
-                                color:Colors.grey,
-                                fontWeight: FontWeight.w500,
-                                height: 1.06,
-                              ),
-                              ),
-                            ),
-                          )
+
                         ],
                       ),
                     ),

@@ -7,6 +7,7 @@ import 'package:cashback/controller/product_types_page_index_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/view/all_featured_products.dart';
 import 'package:cashback/view/all_products.dart';
+import 'package:cashback/view/categories_expandable_screen.dart';
 import 'package:cashback/view/favourite_products.dart';
 import 'package:cashback/view/login_screen.dart';
 import 'package:cashback/view/search_click_screen.dart';
@@ -102,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   flex: 2,
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchClickScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchClickScreen(guest:widget.guest)));
                     },
                     child: TextField(
                       enabled: false,
@@ -126,26 +127,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Expanded(
-                    child: Column(
-                      children: [
-                        const Expanded(
-                          child: Icon(
-                            Cashback.category,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Categories'.tr(),
-                            style: GoogleFonts.roboto(
-                              fontSize: 14.0.sp,
-                              color: const Color(0xFF363636),
-                              fontWeight: FontWeight.w900,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoriesExpanable()));
+                      },
+                      child: Column(
+                        children: [
+                          const Expanded(
+                            child: Icon(
+                              Cashback.category,
+                              color: Colors.black,
                             ),
-                            textAlign: TextAlign.right,
                           ),
-                        )
-                      ],
+                          Expanded(
+                            child: Text(
+                              'Categories'.tr(),
+                              style: GoogleFonts.roboto(
+                                fontSize: 14.0.sp,
+                                color: const Color(0xFF363636),
+                                fontWeight: FontWeight.w900,
+                              ),
+                              textAlign: TextAlign.right,
+                            ),
+                          )
+                        ],
+                      ),
                     )),
               ],
             ),

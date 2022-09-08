@@ -40,6 +40,10 @@ dependencies:
   easy_localization: ^3.0.1
   shared_preferences: ^2.0.15
   blurry_modal_progress_hud: ^1.0.3
+  pinput: ^2.2.12
+  expandable: ^5.0.1
+  dotted_border: ^2.0.0+2
+  path_drawing: ^1.0.1
   http: ^0.13.4
   dropdown_search: ^5.0.2
   flutter:

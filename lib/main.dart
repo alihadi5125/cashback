@@ -7,6 +7,7 @@ import 'package:cashback/controller/categories_cubit.dart';
 import 'package:cashback/controller/logout_cubit.dart';
 import 'package:cashback/controller/parent_categories_cubit.dart';
 import 'package:cashback/controller/remove_fav_cubit.dart';
+import 'package:cashback/controller/retailers_search_cubit/retailers_search_cubit.dart';
 import 'package:cashback/controller/shared_preferences.dart';
 import 'package:cashback/controller/signup_cubit.dart';
 import 'package:cashback/view/bottom_navigation_screen.dart';
@@ -85,6 +86,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider<RemoveFavCubit>(
               create: (BuildContext context) => RemoveFavCubit(),
+            ),
+            BlocProvider<RetailersSearchCubit>(
+              create: (BuildContext context) => RetailersSearchCubit(),
             ),
           ],
 
